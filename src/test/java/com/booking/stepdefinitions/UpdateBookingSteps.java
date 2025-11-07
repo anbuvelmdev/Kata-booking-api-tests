@@ -3,10 +3,12 @@ package com.booking.stepdefinitions;
 import com.booking.utils.ApiUtils;
 import com.booking.context.TestContext;
 import com.booking.pojo.BookingRequest;
+import com.booking.utils.LogUtils;
 import com.booking.utils.ResponseValidator;
 import io.restassured.response.Response;
 import io.cucumber.java.en.*;
 import org.junit.Assert;
+import org.slf4j.Logger;
 
 public class UpdateBookingSteps {
 
@@ -15,14 +17,14 @@ public class UpdateBookingSteps {
     private BookingRequest bookingRequest;
     private ApiUtils bookingApi;
     private final TestContext context;
-
+    private static final Logger log = LogUtils.getLogger(UpdateBookingSteps.class);
     public UpdateBookingSteps(TestContext context) {
         this.context = context;
     }
 
     @Given("booking with id {string} exists")
     public void booking_with_id_exists(String bookingId) {
-        System.out.println("Checking booking ID exists: " + bookingId);
+       log.info("Checking booking ID exists: {}", bookingId);
     }
 
     @When("user updates booking {string} with new details")

@@ -4,6 +4,7 @@ import com.booking.utils.ApiUtils;
 import com.booking.context.TestContext;
 import com.booking.pojo.BookingRequest;
 import com.booking.pojo.BookingResponse;
+import com.booking.utils.LogUtils;
 import com.booking.utils.ResponseValidator;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -12,6 +13,7 @@ import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import org.junit.Assert;
 import com.booking.utils.JsonUtils;
+import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.util.Random;
@@ -24,7 +26,7 @@ public class BookingSteps {
     private BookingResponse bookingResponse;
     private int bookingId;
     private final TestContext context;
-
+    private static final Logger log = LogUtils.getLogger(UpdateBookingSteps.class);
     public BookingSteps(TestContext context) {
         this.context = context;
     }
@@ -34,7 +36,7 @@ public class BookingSteps {
         bookingRequest = JsonUtils.loadBookingData("src/test/resources/testdata/" + dataFile);
         bookingRequest.setRoomid(new Random().nextInt(100) + 1); // For dynamic roomID
         Assert.assertNotNull("Booking data should be loaded from JSON", bookingRequest);
-        System.out.println(bookingRequest);
+        log.info("Verified booking request {}", bookingRequest);
     }
 
     @When("user sends a POST request to {string} with booking details")
@@ -44,7 +46,7 @@ public class BookingSteps {
         response = bookingApi.postBookingWithoutAuth(endpoint, bookingRequest);
         // deserialize to POJO for your assertions
         bookingResponse = response.as(BookingResponse.class);
-        System.out.println("POST request sent to create booking");
+        log.info("POST request sent to create booking");
     }
 
     @Then("user should receive booking status code {int}")
