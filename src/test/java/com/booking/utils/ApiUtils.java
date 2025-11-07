@@ -54,7 +54,7 @@ public class ApiUtils {
     }
 
     public static Response getBooking(String endpoint, String token) {
-        LogUtils.logApiRequest(log, "GET", endpoint, "");
+        LogUtils.logApiRequest(log, "GET", endpoint, null);
         return  given()
                 .header("Authorization", "Bearer " + token)
                 .header("Content-Type", "application/json")
@@ -67,7 +67,7 @@ public class ApiUtils {
     }
 
     public static Response getBookingWithoutAuth(String endpoint) {
-        LogUtils.logApiRequest(log, "GET", endpoint, "");
+        LogUtils.logApiRequest(log, "GET", endpoint, null);
         return  given()
                 .contentType("application/json")
                 .log().all()
@@ -93,4 +93,11 @@ public class ApiUtils {
                 .response();
     }
 
+    public static Response deleteRequest(String endpoint, String token) {
+        LogUtils.logApiRequest(log, "DELETE", endpoint, null);
+        return given()
+                .contentType("application/json")
+                .header("Authorization", "Bearer " + token)
+                .delete(endpoint);
+    }
 }

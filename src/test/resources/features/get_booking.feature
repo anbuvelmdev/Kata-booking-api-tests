@@ -1,4 +1,4 @@
-@Booking @GetBooking
+@Booking @getapi
 Feature: Retrieve Booking details
 
   Background:

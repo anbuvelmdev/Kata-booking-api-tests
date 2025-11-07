@@ -1,4 +1,4 @@
-@booking
+@booking @updateapi
 Feature: Update Booking API
 
   Background:
