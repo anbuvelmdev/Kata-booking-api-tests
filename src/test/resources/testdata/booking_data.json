@@ -1,0 +1,12 @@
+{
+  "roomid": 2,
+  "firstname": "John",
+  "lastname": "Doe",
+  "email": "anbuvel@gmail.com",
+  "phone": "12345678902",
+  "depositpaid": true,
+  "bookingdates": {
+    "checkin": "2025-11-10",
+    "checkout": "2025-11-15"
+  }
+}
