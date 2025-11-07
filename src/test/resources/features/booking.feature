@@ -11,6 +11,7 @@ Feature: Hotel Booking API
     Examples:
       | dataFile                                 | endpoint  | expectedStatus | validationType   |
       | booking_data.json                        | /booking  | 201            | validBooking     |
+      | booking_without_email_phone.json         | /booking  | 400            | missingemailphone|
       | booking_missing_firstname.json           | /booking  | 400            | missingFirstname |
       | booking_invalid_email.json               | /booking  | 400            | invalidEmail     |
       | booking_invalid_dates.json               | /booking  | 400            | invalidDates     |

@@ -65,6 +65,7 @@ public class BookingSteps {
         String body = response.asString();
         boolean isValid = switch (type.toLowerCase()) {
             case "validbooking" -> body.contains("bookingid");
+            case "missingemailphone" -> body.contains("Failed");
             case "missingfirstname" -> body.contains("Firstname");
             case "invalidemail" -> body.contains("email");
             case "invaliddates" -> body.contains("Failed");
