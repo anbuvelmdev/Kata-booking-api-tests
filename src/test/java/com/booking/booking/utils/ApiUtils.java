@@ -25,9 +25,21 @@ public class ApiUtils {
     }
 
 
-    public Response createBooking(String endpoint, BookingRequest request, String token) {
+    public Response postBooking(String endpoint, BookingRequest request, String token) {
         return given()
                 .header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json")
+                .body(request)
+                .log().all()
+                .when()
+                .post(endpoint)
+                .then()
+                .log().all()
+                .extract().response();
+    }
+
+    public Response postBookingWithoutAuth(String endpoint, BookingRequest request) {
+        return given()
                 .header("Content-Type", "application/json")
                 .body(request)
                 .log().all()

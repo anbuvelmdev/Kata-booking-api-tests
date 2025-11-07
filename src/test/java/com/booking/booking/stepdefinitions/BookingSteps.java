@@ -12,6 +12,7 @@ import com.booking.utils.JsonUtils;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Random;
 
 public class BookingSteps {
 
@@ -23,31 +24,26 @@ public class BookingSteps {
     private BookingResponse bookingResponse;
     private int bookingId;
 
-    @Given("login using username {string} and password {string}")
-    public void login_using_username(String username, String password) {
-        credentials = Map.of("username", username, "password", password);
-        response = ApiUtils.authLogin("/auth/login", credentials);
-        // Extract auth token from response JSON
-        authToken = response.jsonPath().getString("token");  // replace 'token' with actual JSON key
-    }
-
-    @When("I send a POST request to {string} with booking details")
-    public void i_send_a_post_request_to_with_booking_details(String endpoint) throws IOException {
-        System.out.println(authToken);
-
+    @Given("user have valid booking data")
+    public void user_have_valid_booking_data(){
         bookingRequest = JsonUtils.loadBookingData("src/test/resources/testdata/booking_data.json");
+        bookingRequest.setRoomid(new Random().nextInt(100) + 1);
         Assert.assertNotNull("Booking data should be loaded from JSON", bookingRequest);
         System.out.println(bookingRequest);
+    }
+
+    @When("user send a POST request to {string} with booking details")
+    public void user_send_a_post_request_to_with_booking_details(String endpoint) throws IOException {
 
         bookingApi = new ApiUtils();
-        response = bookingApi.createBooking(endpoint, bookingRequest, authToken);
+        response = bookingApi.postBookingWithoutAuth(endpoint, bookingRequest);
         // deserialize to POJO for your assertions
         bookingResponse = response.as(BookingResponse.class);
         System.out.println("POST request sent to create booking");
     }
 
-    @Then("I should receive status code {int}")
-    public void i_should_receive_status_code(int expectedStatus) {
+    @Then("user should receive status code {int}")
+    public void user_should_receive_status_code(int expectedStatus) {
         Assert.assertEquals(expectedStatus, response.statusCode());
     }
 
@@ -55,5 +51,11 @@ public class BookingSteps {
     public void the_response_should_contain_the_booking_id() {
         bookingId = bookingResponse.getBookingid();
         Assert.assertTrue("Booking ID should be greater than 0",bookingResponse.getBookingid() > 0);
+    }
+
+    @Then("the error message should contain {string}")
+    public void the_error_message_should_contain(String expectedMessage) {
+        String message = response.getBody().asString();
+        Assert.assertTrue("Expected error message not found", message.contains(expectedMessage));
     }
 }
