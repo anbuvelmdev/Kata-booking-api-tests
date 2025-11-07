@@ -1,8 +1,10 @@
-package com.booking.booking.stepdefinitions;
+package com.booking.stepdefinitions;
 
-import com.booking.booking.utils.ApiUtils;
+import com.booking.utils.ApiUtils;
+import com.booking.context.TestContext;
 import com.booking.pojo.BookingRequest;
 import com.booking.pojo.BookingResponse;
+import com.booking.utils.ResponseValidator;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -12,7 +14,6 @@ import org.junit.Assert;
 import com.booking.utils.JsonUtils;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.Random;
 
 public class BookingSteps {
@@ -22,6 +23,11 @@ public class BookingSteps {
     private ApiUtils bookingApi;
     private BookingResponse bookingResponse;
     private int bookingId;
+    private final TestContext context;
+
+    public BookingSteps(TestContext context) {
+        this.context = context;
+    }
 
     @Given("user loads booking data from {string}")
     public void user_loads_booking_data_from(String dataFile){
@@ -41,9 +47,9 @@ public class BookingSteps {
         System.out.println("POST request sent to create booking");
     }
 
-    @Then("user should receive status code {int}")
-    public void user_should_receive_status_code(int expectedStatus) {
-        Assert.assertEquals(expectedStatus, response.statusCode());
+    @Then("user should receive booking status code {int}")
+    public void user_should_receive_booking_status_code(int expectedStatusCode) {
+        ResponseValidator.validateStatusCode(response, expectedStatusCode);
     }
 
     @And("the response should contain the booking id")

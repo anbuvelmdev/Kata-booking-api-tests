@@ -1,4 +1,4 @@
-package com.booking.booking.utils;
+package com.booking.utils;
 
 import com.booking.config.ConfigReader;
 import com.booking.pojo.BookingRequest;
@@ -52,7 +52,7 @@ public class ApiUtils {
 
     public static Response getBooking(String endpoint, String token) {
         return  given()
-                .header("Cookie",  token)
+                .header("Authorization", "Bearer " + token)
                 .header("Content-Type", "application/json")
                 .log().all()
                 .when()
@@ -71,6 +71,20 @@ public class ApiUtils {
                 .then()
                 .log().all()
                 .extract().response();
+    }
+
+    public static Response putRequest(String endpoint, Object body, String token) {
+        return given()
+                .log().all()
+                .contentType("application/json")
+                .header("Authorization", "Bearer " + token)
+                .body(body)
+                .when()
+                .put(endpoint)
+                .then()
+                .log().all()
+                .extract()
+                .response();
     }
 
 }

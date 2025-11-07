@@ -1,9 +1,10 @@
-package com.booking.booking.stepdefinitions;
+package com.booking.stepdefinitions;
 
-import com.booking.booking.utils.ApiUtils;
+import com.booking.utils.ApiUtils;
+import com.booking.context.TestContext;
+import com.booking.utils.ResponseValidator;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 
 import java.util.Map;
@@ -17,20 +18,21 @@ public class AuthSteps {
     private static String authToken;
     private Map<String, String> credentials;
 
-    @Given("I have username {string} and password {string}")
-    public void setCredentials(String username, String password) {
-        credentials = Map.of("username", username, "password", password);
+    private final TestContext context;
+    public AuthSteps(TestContext context) {
+        this.context = context;
     }
 
-    @When("I send a POST request to {string}")
-    public void sendPostRequest(String authEndpoint) {
-        response = ApiUtils.authLogin(authEndpoint, credentials);
-        response.then().log().all();
+    @Given("login using username {string} and password {string}")
+    public void login_using_username_and_password(String username, String password) {
+        response = ApiUtils.authLogin("/auth/login", Map.of("username", username, "password", password));
+        String token = response.jsonPath().getString("token");
+        context.setAuthToken(token);
     }
 
-    @Then("the response status code should {int}")
+    @Then("the response auth login status code should {int}")
     public void verifyStatusCode(int expectedStatusCode) {
-        assertThat(response.getStatusCode(), equalTo(expectedStatusCode));
+        ResponseValidator.validateStatusCode(response, expectedStatusCode);
     }
 
     @Then("the response should contain a token or error {string}")

@@ -5,7 +5,7 @@ Feature: Hotel Booking API
   Scenario Outline: Create booking with different data and expected outcomes
     Given user loads booking data from "<dataFile>"
     When user sends a POST request to "<endpoint>" with booking details
-    Then user should receive status code <expectedStatus>
+    Then user should receive booking status code <expectedStatus>
     And validate response based on "<validationType>"
 
     Examples:
