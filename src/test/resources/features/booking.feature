@@ -1,4 +1,4 @@
-@booking
+@booking @noauth
 Feature: Hotel Booking API
 
   @createBooking
@@ -15,4 +15,3 @@ Feature: Hotel Booking API
       | booking_invalid_email.json               | /booking  | 400            | invalidEmail     |
       | booking_invalid_dates.json               | /booking  | 400            | invalidDates     |
 
-    

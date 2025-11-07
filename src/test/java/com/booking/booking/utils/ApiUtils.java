@@ -40,7 +40,7 @@ public class ApiUtils {
 
     public Response postBookingWithoutAuth(String endpoint, BookingRequest request) {
         return given()
-                .header("Content-Type", "application/json")
+                .contentType("application/json")
                 .body(request)
                 .log().all()
                 .when()
@@ -49,4 +49,28 @@ public class ApiUtils {
                 .log().all()
                 .extract().response();
     }
+
+    public static Response getBooking(String endpoint, String token) {
+        return  given()
+                .header("Cookie",  token)
+                .header("Content-Type", "application/json")
+                .log().all()
+                .when()
+                .get(endpoint)
+                .then()
+                .log().all()
+                .extract().response();
+    }
+
+    public static Response getBookingWithoutAuth(String endpoint) {
+        return  given()
+                .contentType("application/json")
+                .log().all()
+                .when()
+                .get(endpoint)
+                .then()
+                .log().all()
+                .extract().response();
+    }
+
 }

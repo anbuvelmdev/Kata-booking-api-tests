@@ -14,6 +14,7 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class AuthSteps {
     private Response response;
+    private static String authToken;
     private Map<String, String> credentials;
 
     @Given("I have username {string} and password {string}")
@@ -34,13 +35,17 @@ public class AuthSteps {
 
     @Then("the response should contain a token or error {string}")
     public void verifyToken(String expectedError) {
-        String token = response.jsonPath().getString("token");
+        authToken = response.jsonPath().getString("token");
         String error = response.jsonPath().getString("error");
 
         if (expectedError.isEmpty()){
-            assertThat(token, notNullValue());
+            assertThat(authToken, notNullValue());
         }else{
             assertThat(error, notNullValue());
         }
+    }
+
+    public static String getAuthToken() {
+        return authToken;
     }
 }

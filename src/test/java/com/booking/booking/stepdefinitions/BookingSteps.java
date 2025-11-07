@@ -18,8 +18,6 @@ import java.util.Random;
 public class BookingSteps {
 
     private Response response;
-    private Map<String, String> credentials;
-    private String authToken;
     private BookingRequest bookingRequest;
     private ApiUtils bookingApi;
     private BookingResponse bookingResponse;
@@ -28,7 +26,7 @@ public class BookingSteps {
     @Given("user loads booking data from {string}")
     public void user_loads_booking_data_from(String dataFile){
         bookingRequest = JsonUtils.loadBookingData("src/test/resources/testdata/" + dataFile);
-        bookingRequest.setRoomid(new Random().nextInt(100) + 1);
+        bookingRequest.setRoomid(new Random().nextInt(100) + 1); // For dynamic roomID
         Assert.assertNotNull("Booking data should be loaded from JSON", bookingRequest);
         System.out.println(bookingRequest);
     }
@@ -47,7 +45,6 @@ public class BookingSteps {
     public void user_should_receive_status_code(int expectedStatus) {
         Assert.assertEquals(expectedStatus, response.statusCode());
     }
-
 
     @And("the response should contain the booking id")
     public void the_response_should_contain_the_booking_id() {
