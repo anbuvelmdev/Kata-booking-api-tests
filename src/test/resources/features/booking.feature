@@ -27,6 +27,7 @@ Feature: Hotel Booking API
       | bookingMissingFirstname | /booking | 400            | Firstname should not be blank       |
       | lastnameTooShort        | /booking | 400            | size must be between 3 and 30       |
       | lastnameTooLong         | /booking | 400            | size must be between 3 and 30       |
+      | bookingMissingLastname  | /booking | 400            | Lastname should not be blank        |
       | phoneInvalidShort       | /booking | 400            | size must be between 11 and 21      |
       | phoneInvalidLong        | /booking | 400            | size must be between 11 and 21      |
       | bookingInvalidEmail     | /booking | 400            | must be a well-formed email address |
