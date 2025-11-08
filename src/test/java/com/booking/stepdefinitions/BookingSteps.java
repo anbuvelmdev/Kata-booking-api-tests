@@ -1,6 +1,6 @@
 package com.booking.stepdefinitions;
 
-import com.booking.constants.CommonConstants;
+import com.booking.constants.FilePaths;
 import com.booking.utils.*;
 import com.booking.context.TestContext;
 import com.booking.pojo.BookingRequest;
@@ -31,7 +31,7 @@ public class BookingSteps {
 
     @Given("user loads booking data from {string}")
     public void user_loads_booking_data_from(String dataFile){
-        bookingRequest = JsonUtils.loadBookingData(CommonConstants.TESTDATA_PATH + dataFile);
+        bookingRequest = JsonUtils.loadBookingData(FilePaths.TESTDATA_PATH + dataFile);
         bookingRequest.setRoomid(new Random().nextInt(100) + 1); // For dynamic roomID
         Assert.assertNotNull("Booking data should be loaded from JSON", bookingRequest);
         log.info("Verified booking request {}", bookingRequest);

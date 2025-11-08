@@ -2,11 +2,12 @@ package com.booking.stepdefinitions;
 
 import com.booking.config.ConfigReader;
 import com.booking.constants.BookingResponseKeys;
+import com.booking.constants.FilePaths;
 import com.booking.constants.ConfigKeys;
-import com.booking.constants.HttpConstants;
 import com.booking.utils.ApiUtils;
 import com.booking.context.TestContext;
 import com.booking.pojo.BookingRequest;
+import com.booking.utils.JsonUtils;
 import com.booking.utils.LogUtils;
 import com.booking.utils.ResponseValidator;
 import io.restassured.response.Response;
@@ -34,13 +35,9 @@ public class UpdateBookingSteps {
     @When("user updates booking {string} with new details")
     public void user_updates_booking_with_new_details(String bookingId) {
         String token = context.getAuthToken();
-        bookingRequest = new BookingRequest();
-        bookingRequest.setBookingId(Integer.parseInt(bookingId));
-        bookingRequest.setRoomid(444);
-        bookingRequest.setFirstname("John");
-        bookingRequest.setLastname("Doe");
-        bookingRequest.setDepositpaid(true);
-        bookingRequest.setBookingdates(new BookingRequest.BookingDates("2025-11-10", "2025-11-15"));
+        bookingRequest = JsonUtils.loadBookingData(FilePaths.TESTDATA_PATH + FilePaths.UPDATE_BOOKING_TESTDATA_FILE);
+        Assert.assertNotNull("Booking data to update should be loaded from JSON", bookingRequest);
+        log.info("Verified booking request {}", bookingRequest);
 
         bookingApi = new ApiUtils();
         response = ApiUtils.putRequest(ConfigReader.get(ConfigKeys.BOOKING_BY_ID_ENDPOINT) + bookingId, bookingRequest, token);
