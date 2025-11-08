@@ -49,6 +49,7 @@ public class BookingSteps {
         response = ApiUtils.post(baseUrl, endpoint,
                 bookingRequest,
                 token);
+        context.setResponse(response);
         // deserialize to POJO for the assertions
         bookingResponse = response.as(BookingResponse.class);
         log.info("POST request sent to create booking");
@@ -57,11 +58,6 @@ public class BookingSteps {
     @Then("user should receive booking status code {int}")
     public void user_should_receive_booking_status_code(int expectedStatusCode) {
         ResponseValidator.validateStatusCode(response, expectedStatusCode);
-    }
-
-    @Then("response should match schema {string}")
-    public void response_should_match_schema (String schemaFile) throws JsonProcessingException {
-        SchemaValidator.validateSchema(response, schemaFile);
     }
 
     @And("validate response based on {string}")

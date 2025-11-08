@@ -42,6 +42,7 @@ public class DeleteBookingSteps {
         response = ApiUtils.delete(baseUrl, resolvedEndpoint,
                 token);
         context.setResponse(response);
+        log.info("DELETE request sent: {}", bookingId);
     }
 
     @When("user sends DELETE request unauthorized to {string}")
@@ -53,6 +54,7 @@ public class DeleteBookingSteps {
         response = ApiUtils.delete(baseUrl, resolvedEndpoint,
                 "");
         context.setResponse(response);
+        log.info("DELETE request sent without token: {}", bookingId);
     }
 
     @When("user send a DELETE request invalid token to {string}")
@@ -64,6 +66,8 @@ public class DeleteBookingSteps {
         String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL); // ensure ConfigKeys holds BASE_URL
         response = ApiUtils.delete(baseUrl, resolvedEndpoint,
                 token);
+        context.setResponse(response);
+        log.info("DELETE request sent invalid token: {}", bookingId);
     }
 
     @Then("user response delete status code should be {int}")

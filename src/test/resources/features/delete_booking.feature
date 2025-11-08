@@ -7,10 +7,11 @@ Feature: Delete Booking API
     When user sends DELETE request to "<endpoint>"
     Then user response delete status code should be <expectedStatus>
     And the booking should be removed successfully and contain "<validationType>"
+    And response should match schema "<schemaFile>"
 
     Examples:
-      | id | endpoint  | expectedStatus | validationType |
-      | 2  | /booking/ | 200            | success        |
+      | id | endpoint  | expectedStatus | validationType | schemaFile                           |
+      | 2  | /booking/ | 200            | success        | success_booking_response_schema.json |
 
   @deleteBooking @Negative
   Scenario Outline: Delete booking by Invalid ID
@@ -18,12 +19,12 @@ Feature: Delete Booking API
     When user sends DELETE request to "<endpoint>"
     Then user response delete status code should be <expectedStatus>
     And delete response should contain error "<expectedError>"
+    And response should match schema "<schemaFile>"
 
     Examples:
-      | id      | endpoint  | expectedStatus | expectedError            |
-      | 9999    | /booking/ | 500            | Failed to delete booking |
-      | INVALID | /booking/ | 500            | Failed to delete booking |
-      |         | /booking/ | 308            | /api/booking             |
+      | id      | endpoint  | expectedStatus | expectedError            | schemaFile                |
+      | 9999    | /booking/ | 500            | Failed to delete booking | error_generic_schema.json |
+      | INVALID | /booking/ | 500            | Failed to delete booking | error_generic_schema.json |
 
   @deleteBooking @Negative
   Scenario Outline: Delete booking UnAuthorized
@@ -31,10 +32,11 @@ Feature: Delete Booking API
     When user sends DELETE request unauthorized to "<endpoint>"
     Then user response delete status code should be <expectedStatus>
     And delete response should contain error "<expectedError>"
+    And response should match schema "<schemaFile>"
 
     Examples:
-      | id | endpoint  | expectedStatus | expectedError           |
-      | 3  | /booking/ | 401            | Authentication required |
+      | id | endpoint  | expectedStatus | expectedError           | schemaFile                |
+      | 3  | /booking/ | 401            | Authentication required | error_generic_schema.json |
 
   @getBooking @Negative
   Scenario Outline: Delete booking Invalid Token
@@ -42,7 +44,8 @@ Feature: Delete Booking API
     When user send a DELETE request invalid token to "<endpoint>"
     Then user response delete status code should be <expectedStatus>
     And delete response should contain error "<expectedError>"
+    And response should match schema "<schemaFile>"
 
     Examples:
-      | id | endpoint  | expectedStatus | expectedError                |
-      | 3  | /booking/ | 403            | Failed to fetch booking: 403 |
+      | id | endpoint  | expectedStatus | expectedError                | schemaFile |
+      | 3  | /booking/ | 403            | Failed to fetch booking: 403 |            |

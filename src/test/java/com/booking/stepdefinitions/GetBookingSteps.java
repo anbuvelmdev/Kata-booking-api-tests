@@ -33,6 +33,8 @@ public class GetBookingSteps {
         String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL); // ensure ConfigKeys holds BASE_URL
         response = ApiUtils.get(baseUrl, endpoint,
                 token);
+        context.setResponse(response);
+        log.info("GET request sent: {}", endpoint);
     }
 
     @When("user send a GET request invalid token to {string}")
@@ -41,6 +43,8 @@ public class GetBookingSteps {
         String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL); // ensure ConfigKeys holds BASE_URL
         response = ApiUtils.get(baseUrl, endpoint,
                 token);
+        context.setResponse(response);
+        log.info("GET request sent invalid token: {}", endpoint);
     }
 
     @When("user send a GET request to {string} without token")
@@ -48,6 +52,8 @@ public class GetBookingSteps {
         String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL); // ensure ConfigKeys holds BASE_URL
         response = ApiUtils.get(baseUrl, endpoint,
                 "");
+        context.setResponse(response);
+        log.info("GET request sent without token: {}", endpoint);
     }
 
     @Then("user get response booking status code should be {int}")

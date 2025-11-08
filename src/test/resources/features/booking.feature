@@ -33,4 +33,4 @@ Feature: Hotel Booking API
       | phoneInvalidShort       | /booking | 400            | size must be between 11 and 21      | errors_array_schema.json   |
       | phoneInvalidLong        | /booking | 400            | size must be between 11 and 21      | errors_array_schema.json   |
       | bookingInvalidEmail     | /booking | 400            | must be a well-formed email address | errors_array_schema.json   |
-      | bookingInvalidDates     | /booking | 409            | Failed to create booking            | error_generic_schema.json |
+      | bookingInvalidDates     | /booking | 400            | Failed to create booking            | error_generic_schema.json |

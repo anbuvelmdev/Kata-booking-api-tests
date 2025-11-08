@@ -3,6 +3,7 @@ package com.booking.stepdefinitions;
 import com.booking.config.ConfigReader;
 import com.booking.constants.AuthConstants;
 import com.booking.constants.ConfigKeys;
+import com.booking.pojo.BookingResponse;
 import com.booking.utils.ApiUtils;
 import com.booking.context.TestContext;
 import com.booking.utils.LogUtils;
@@ -36,6 +37,8 @@ public class AuthSteps {
          response = ApiUtils.post(baseUrl, ConfigReader.get(ConfigKeys.AUTH_ENDPOINT),
                 Map.of(AuthConstants.USERNAME, username, AuthConstants.PASSWORD, password),
                 null);
+        context.setResponse(response);
+        log.info("POST auth request sent");
     }
 
     @Then("user should receive auth status code {int}")

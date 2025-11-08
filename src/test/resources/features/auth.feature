@@ -6,25 +6,27 @@ Feature: Authentication API
     Given login using username "<username>" and password "<password>"
     Then user should receive auth status code <expectedStatus>
     And validate auth token response based on "<validationType>"
+    And response should match schema "<schemaFile>"
 
     Examples:
-      | username | password | expectedStatus | validationType |
-      | admin    | password | 200            | token          |
+      | username | password | expectedStatus | validationType | schemaFile                      |
+      | admin    | password | 200            | token          | token_auth_response_schema.json |
 
   @Negative
   Scenario Outline: Invalid Login scenarios
     Given login using username "<username>" and password "<password>"
     Then user should receive auth status code <expectedStatus>
     And validate auth token response should contain error "<expectedError>"
+    And response should match schema "<schemaFile>"
 
     Examples:
-      | username      | password    | expectedStatus | expectedError       |
-      | admin         | invalid     | 401            | Invalid credentials |
-      |               |             | 401            | Invalid credentials |
-      | admin         |             | 401            | Invalid credentials |
-      |               | password    | 401            | Invalid credentials |
-      | user          | password    | 401            | Invalid credentials |
-      | admin<script> | password    | 401            | Invalid credentials |
-      | admin         | pass@123    | 401            | Invalid credentials |
-      | ' OR '1'='1   | password    | 401            | Invalid credentials |
-      | admin         | ' OR '1'='1 | 401            | Invalid credentials |
+      | username      | password    | expectedStatus | expectedError       | schemaFile                |
+      | admin         | invalid     | 401            | Invalid credentials | error_generic_schema.json |
+      |               |             | 401            | Invalid credentials | error_generic_schema.json |
+      | admin         |             | 401            | Invalid credentials | error_generic_schema.json |
+      |               | password    | 401            | Invalid credentials | error_generic_schema.json |
+      | user          | password    | 401            | Invalid credentials | error_generic_schema.json |
+      | admin<script> | password    | 401            | Invalid credentials | error_generic_schema.json |
+      | admin         | pass@123    | 401            | Invalid credentials | error_generic_schema.json |
+      | ' OR '1'='1   | password    | 401            | Invalid credentials | error_generic_schema.json |
+      | admin         | ' OR '1'='1 | 401            | Invalid credentials | error_generic_schema.json |

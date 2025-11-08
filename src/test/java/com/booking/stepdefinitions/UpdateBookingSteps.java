@@ -49,7 +49,8 @@ public class UpdateBookingSteps {
         response = ApiUtils.put(baseUrl, endpoint,
                 bookingRequest,
                 token);
-        log.info("PUT request sent to update booking");
+        context.setResponse(response);
+        log.info("PUT request sent to booking endpoint: {}", endpoint);
     }
 
     @Then("user update response booking status code should be {int}")
