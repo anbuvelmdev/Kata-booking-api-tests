@@ -14,6 +14,8 @@ import io.restassured.response.Response;
 import org.junit.Assert;
 import org.slf4j.Logger;
 
+import java.time.LocalDate;
+
 import static com.booking.constants.BookingResponseKeys.*;
 
 public class GetBookingSteps {
@@ -60,14 +62,6 @@ public class GetBookingSteps {
     public void the_response_should_contain_the_booking_id() {
         bookingId = bookingResponse.getBookingid();
         Assert.assertTrue("Booking ID should be greater than 0",bookingResponse.getBookingid() > 0);
-    }
-
-    @And("validate get response should contain booking details")
-    public void validate_get_response_should_contain_booking_details() {
-        Assert.assertNotNull(response.jsonPath().get(FIRSTNAME));
-        Assert.assertNotNull(response.jsonPath().get(LASTNAME));
-        Assert.assertNotNull(response.jsonPath().get(BOOKINGDATES_CHECKIN));
-        Assert.assertNotNull(response.jsonPath().get(BOOKINGDATES_CHECKOUT));
     }
 
     @And("validate error message should contain {string}")

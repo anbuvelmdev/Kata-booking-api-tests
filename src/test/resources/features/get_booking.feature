@@ -3,10 +3,9 @@ Feature: Get Booking API
 
   @getBooking @positive
   Scenario: Get booking details by valid ID
-
     When user send a GET request to "<endpoint>"
     Then user should receive status code <expectedStatus>
-    And validate get response should contain booking details
+    And validate response should contain booking details
     And response should match schema "<schemaFile>"
 
     Examples:

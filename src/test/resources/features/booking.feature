@@ -7,6 +7,7 @@ Feature: Hotel Booking API
     When user sends a POST request to "<endpoint>" with booking details
     Then user should receive status code <expectedStatus>
     And validate response based on "<validationType>"
+    And validate response should contain booking details
     And response should match schema "<schemaFile>"
 
     Examples:
