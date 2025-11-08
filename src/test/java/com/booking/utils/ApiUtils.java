@@ -102,4 +102,11 @@ public class ApiUtils {
                 .header(HttpConstants.CONTENT_TYPE, HttpConstants.JSON)
                 .delete(endpoint);
     }
+
+    public static Response deleteRequestWithoutAuth(String endpoint) {
+        LogUtils.logApiRequest(log, "DELETE", endpoint, null);
+        return given()
+                .header(HttpConstants.CONTENT_TYPE, HttpConstants.JSON)
+                .delete(endpoint);
+    }
 }

@@ -11,56 +11,21 @@
       "checkout": "2025-11-15"
     }
   },
-  "duplicateBooking": {
-    "roomid": 1,
-    "firstname": "John",
-    "lastname": "Doe",
-    "email": "john.doe@example.com",
-    "phone": "12345678901",
-    "depositpaid": true,
-    "bookingdates": {
-      "checkin": "2025-11-10",
-      "checkout": "2025-11-15"
-    }
-  },
-  "bookingInvalidDates": {
-    "roomid": 1,
-    "firstname": "John",
-    "lastname": "Doe",
-    "email": "john.doe@example.com",
-    "phone": "12345678901",
-    "depositpaid": true,
-    "bookingdates": {
-      "checkin": "2025-11-25",
-      "checkout": "2025-11-15"
-    }
-  },
-  "bookingInvalidEmail": {
-    "roomid": 1,
-    "firstname": "John",
-    "lastname": "Doe",
-    "email": "john.doeexample.com",
-    "phone": "12345678901",
-    "depositpaid": true,
-    "bookingdates": {
-      "checkin": "2025-11-10",
-      "checkout": "2025-11-15"
-    }
-  },
-  "bookingMissingFirstname": {
-    "roomid": 1,
-    "lastname": "Doe",
-    "email": "john.doe@example.com",
-    "phone": "12345678901",
-    "depositpaid": true,
-    "bookingdates": {
-      "checkin": "2025-11-10",
-      "checkout": "2025-11-15"
-    }
-  },
-  "bookingInvalidFirstname": {
+  "firstnameTooShort": {
     "roomid": 1,
     "firstname": "Jo",
+    "lastname": "Doe",
+    "email": "john.doe@example.com",
+    "phone": "12345678901",
+    "depositpaid": true,
+    "bookingdates": {
+      "checkin": "2025-11-10",
+      "checkout": "2025-11-15"
+    }
+  },
+  "firstnameTooLong": {
+    "roomid": 1,
+    "firstname": "John Doe And John Dafurol",
     "lastname": "Doe",
     "email": "john.doe@example.com",
     "phone": "12345678901",
@@ -82,11 +47,178 @@
       "checkout": "2025-11-15"
     }
   },
-  "updateBooking": {
+   "lastnameTooShort": {
+    "roomid": 1,
+    "firstname": "John",
+    "lastname": "Doe And John Dafurol John Gofed Doe And John Dafurol John Gofed",
+    "email": "john.doe@example.com",
+    "phone": "12345678901",
+    "depositpaid": true,
+    "bookingdates": {
+      "checkin": "2025-11-10",
+      "checkout": "2025-11-15"
+    }
+  },
+   "lastnameTooLong": {
+    "roomid": 1,
+    "firstname": "John",
+    "lastname": "Do",
+    "email": "john.doe@example.com",
+    "phone": "12345678901",
+    "depositpaid": true,
+    "bookingdates": {
+      "checkin": "2025-11-10",
+      "checkout": "2025-11-15"
+    }
+  },
+   "phoneInvalidShort": {
     "roomid": 1,
     "firstname": "John",
     "lastname": "Doe",
     "email": "john.doe@example.com",
+    "phone": "1234567890",
+    "depositpaid": true,
+    "bookingdates": {
+      "checkin": "2025-11-10",
+      "checkout": "2025-11-15"
+    }
+  },
+    "phoneInvalidLong": {
+    "roomid": 1,
+    "firstname": "John",
+    "lastname": "Doe",
+    "email": "john.doe@example.com",
+    "phone": "123456789011123456789011",
+    "depositpaid": true,
+    "bookingdates": {
+      "checkin": "2025-11-10",
+      "checkout": "2025-11-15"
+    }
+  },
+  "bookingInvalidEmail": {
+    "roomid": 1,
+    "firstname": "John",
+    "lastname": "Doe",
+    "email": "john.doeexample.com",
+    "phone": "12345678901",
+    "depositpaid": true,
+    "bookingdates": {
+      "checkin": "2025-11-10",
+      "checkout": "2025-11-15"
+    }
+  },
+  "bookingInvalidDates": {
+    "roomid": 1,
+    "firstname": "John",
+    "lastname": "Doe",
+    "email": "john.doe@example.com",
+    "phone": "12345678901",
+    "depositpaid": true,
+    "bookingdates": {
+      "checkin": "2025-11-25",
+      "checkout": "2025-11-15"
+    }
+  },
+  "duplicateBooking": {
+    "roomid": 1,
+    "firstname": "John",
+    "lastname": "Doe",
+    "email": "john.doe@example.com",
+    "phone": "12345678901",
+    "depositpaid": true,
+    "bookingdates": {
+      "checkin": "2025-11-10",
+      "checkout": "2025-11-15"
+    }
+  },
+  "updateValidBooking": {
+    "roomid": 5,
+    "firstname": "John",
+    "lastname": "Doe",
+    "email": "john.doe@example.com",
+    "phone": "12345678901",
+    "depositpaid": true,
+    "bookingdates": {
+      "checkin": "2025-11-10",
+      "checkout": "2025-11-15"
+    }
+  },
+  "updateFirstnameTooShort": {
+    "roomid": 5,
+    "firstname": "Jo",
+    "lastname": "Doe",
+    "email": "john.doe@example.com",
+    "phone": "12345678901",
+    "depositpaid": true,
+    "bookingdates": {
+      "checkin": "2025-11-10",
+      "checkout": "2025-11-15"
+    }
+  },
+  "updateFirstnameTooLong": {
+    "roomid": 5,
+    "firstname": "John Doe And John Dafurol",
+    "lastname": "Doe",
+    "email": "john.doe@example.com",
+    "phone": "12345678901",
+    "depositpaid": true,
+    "bookingdates": {
+      "checkin": "2025-11-10",
+      "checkout": "2025-11-15"
+    }
+  },
+   "updateLastnameTooShort": {
+    "roomid": 1,
+    "firstname": "John",
+    "lastname": "Doe And John Dafurol John Gofed Doe And John Dafurol John Gofed",
+    "email": "john.doe@example.com",
+    "phone": "12345678901",
+    "depositpaid": true,
+    "bookingdates": {
+      "checkin": "2025-11-10",
+      "checkout": "2025-11-15"
+    }
+  },
+   "updateLastnameTooLong": {
+    "roomid": 1,
+    "firstname": "John",
+    "lastname": "Do",
+    "email": "john.doe@example.com",
+    "phone": "12345678901",
+    "depositpaid": true,
+    "bookingdates": {
+      "checkin": "2025-11-10",
+      "checkout": "2025-11-15"
+    }
+  },
+   "updatePhoneInvalidShort": {
+    "roomid": 1,
+    "firstname": "John",
+    "lastname": "Doe",
+    "email": "john.doe@example.com",
+    "phone": "1234567890",
+    "depositpaid": true,
+    "bookingdates": {
+      "checkin": "2025-11-10",
+      "checkout": "2025-11-15"
+    }
+  },
+    "updatePhoneInvalidLong": {
+    "roomid": 1,
+    "firstname": "John",
+    "lastname": "Doe",
+    "email": "john.doe@example.com",
+    "phone": "123456789011123456789011",
+    "depositpaid": true,
+    "bookingdates": {
+      "checkin": "2025-11-10",
+      "checkout": "2025-11-15"
+    }
+  },
+  "updateBookingWithoutEmail": {
+    "roomid": 1,
+    "firstname": "John",
+    "lastname": "Doe",
     "phone": "12345678901",
     "depositpaid": true,
     "bookingdates": {
@@ -106,6 +238,18 @@
       "checkout": "2025-11-15"
     }
   },
+  "updateBookingInvalidDates": {
+    "roomid": 1,
+    "firstname": "John",
+    "lastname": "Doe",
+    "email": "john.doe@example.com",
+    "phone": "12345678901",
+    "depositpaid": true,
+    "bookingdates": {
+      "checkin": "2025-11-25",
+      "checkout": "2025-11-15"
+    }
+  },
   "updateBookingMissingFirstname": {
     "roomid": 1,
     "lastname": "Doe",
@@ -117,4 +261,4 @@
       "checkout": "2025-11-15"
     }
   }
-}
+  }

@@ -8,6 +8,4 @@ public final class ConfigKeys {
     public static final String AUTH_ENDPOINT = "auth.endpoint";
     public static final String AUTH_USERNAME = "auth.username";
     public static final String AUTH_PASSWORD = "auth.password";
-    public static final String BOOKING_ENDPOINT = "booking.endpoint";
-    public static final String BOOKING_BY_ID_ENDPOINT = "booking.by.id.endpoint";
 }

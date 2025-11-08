@@ -15,14 +15,4 @@ public class LogUtils {
             log.debug("Request Body: {}", body);
         }
     }
-
-    public static void logApiResponse(Logger log, int statusCode, String body) {
-        log.info("⬅️  Received Response: HTTP {}", statusCode);
-        log.debug("Response Body: {}", body);
-    }
-
-    public static void logError(Logger log, String message, Exception e) {
-        log.error("❌ {} - {}", message, e.getMessage());
-        log.debug("Stack trace: ", e);
-    }
 }

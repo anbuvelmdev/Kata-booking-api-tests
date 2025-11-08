@@ -41,6 +41,23 @@ public class DeleteBookingSteps {
         context.setResponse(response);
     }
 
+    @When("user sends DELETE request unauthorized to {string}")
+    public void user_sends_DELETE_request_unauthorized_to(String endpoint) {
+        String resolvedEndpoint = endpoint+ bookingId;
+        log.info("Sending DELETE request to endpoint: {}", resolvedEndpoint);
+
+        bookingApi = new ApiUtils();
+        response = ApiUtils.deleteRequestWithoutAuth(resolvedEndpoint);
+        context.setResponse(response);
+    }
+
+    @When("user send a DELETE request invalid token to {string}")
+    public void user_send_a_DELETE_request_invalid_token_to(String endpoint) {
+
+        String token = "invalid-token-123456";
+        response = ApiUtils.getBooking(endpoint+ bookingId, token);
+    }
+
     @Then("user response delete status code should be {int}")
     public void user_response_delete_status_code_should_be(int expectedStatusCode) {
         ResponseValidator.validateStatusCode(response, expectedStatusCode);

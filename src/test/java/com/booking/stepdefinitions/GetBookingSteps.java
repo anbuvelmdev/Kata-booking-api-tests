@@ -31,6 +31,12 @@ public class GetBookingSteps {
         response = ApiUtils.getBooking(endpoint, token);
     }
 
+    @When("user send a GET request invalid token to {string}")
+    public void user_send_a_GET_request_invalid_token_to(String endpoint) {
+        String token = "invalid-token-123456";
+        response = ApiUtils.getBooking(endpoint, token);
+    }
+
     @When("user send a GET request to {string} without token")
     public void user_send_a_get_request_without_token(String endpoint) {
         bookingApi = new ApiUtils();

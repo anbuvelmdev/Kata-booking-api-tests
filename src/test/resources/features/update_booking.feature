@@ -9,8 +9,8 @@ Feature: Update Booking API
     And validate update booking response based on "<validationType>"
 
     Examples:
-      | testDataKey   | endpoint   | expectedStatus | validationType |
-      | updateBooking | /booking/2 | 200            | success        |
+      | testDataKey        | endpoint   | expectedStatus | validationType |
+      | updateValidBooking | /booking/2 | 200            | success        |
 
   @updateBooking @Negative
   Scenario Outline: Update booking with invalid data
@@ -21,6 +21,14 @@ Feature: Update Booking API
 
     Examples:
       | testDataKey                   | endpoint   | expectedStatus | expectedError                       |
-      | updateBookingInvalidEmail     | /booking/2 | 400            | must be a well-formed email address |
-      | updateBookingMissingFirstname | /booking/2 | 400            | Firstname should not be blank       |
+      | updateFirstnameTooShort       | /booking/5 | 400            | size must be between 3 and 18       |
+      | updateFirstnameTooLong        | /booking/5 | 400            | size must be between 3 and 18       |
+      | updateBookingMissingFirstname | /booking/5 | 400            | Firstname should not be blank       |
+      | updateLastnameTooShort        | /booking/5 | 400            | size must be between 3 and 30       |
+      | updateLastnameTooLong         | /booking/5 | 400            | size must be between 3 and 30       |
+      | updatePhoneInvalidShort       | /booking/5 | 400            | size must be between 11 and 21      |
+      | updatePhoneInvalidLong        | /booking/5 | 400            | size must be between 11 and 21      |
+      | updateBookingInvalidEmail     | /booking/5 | 400            | must be a well-formed email address |
+      | updateBookingWithoutEmail     | /booking/5 | 400            | Failed to update booking |
+      | updateBookingInvalidDates     | /booking/5 | 409            | Failed to update booking            |
 

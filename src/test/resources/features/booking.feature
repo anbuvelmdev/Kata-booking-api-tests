@@ -22,7 +22,12 @@ Feature: Hotel Booking API
 
     Examples:
       | testDataKey             | endpoint | expectedStatus | expectedError                       |
-      | bookingInvalidFirstname | /booking | 400            | size must be between 3 and 18       |
+      | firstnameTooShort       | /booking | 400            | size must be between 3 and 18       |
+      | firstnameTooLong        | /booking | 400            | size must be between 3 and 18       |
       | bookingMissingFirstname | /booking | 400            | Firstname should not be blank       |
+      | lastnameTooShort        | /booking | 400            | size must be between 3 and 30       |
+      | lastnameTooLong         | /booking | 400            | size must be between 3 and 30       |
+      | phoneInvalidShort       | /booking | 400            | size must be between 11 and 21      |
+      | phoneInvalidLong        | /booking | 400            | size must be between 11 and 21      |
       | bookingInvalidEmail     | /booking | 400            | must be a well-formed email address |
       | bookingInvalidDates     | /booking | 409            | Failed to create booking            |
