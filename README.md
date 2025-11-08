@@ -1,67 +1,147 @@
-# Kata API Testing in Java
+# 🏨 Hotel Booking API Automation Framework
 
-API Testing and Java Exercise: Setting up a Basic API Test Automation Framework.
+[![Java](https://img.shields.io/badge/Java-17-blue)](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html)
+[![Cucumber](https://img.shields.io/badge/Cucumber-BDD-green)](https://cucumber.io/)
+[![Rest-Assured](https://img.shields.io/badge/Rest--Assured-API-blue)](https://rest-assured.io/)
+[![Maven](https://img.shields.io/badge/Maven-Build-red)](https://maven.apache.org/)
 
-## Objective
-The objective of this exercise is to evaluate your knowledge on API testing and Java by setting up a basic API Test Automation framework using Rest-Assured and Cucumber. You will need to create a test suite that executes a few tests against one endpoint of a hotel booking website and evaluates their responses.
+---
 
-## Background
-The application under test is a simple hotel booking website where you can book a room and also send a form with a request.
+## 📖 Project Overview
 
-The website can be accessed at https://automationintesting.online/.
+This framework is designed for **automated API testing** of the Hotel Booking application available at [https://automationintesting.online/](https://automationintesting.online/).  
 
-The Swagger documentation for the two endpoints you will be testing can be found at:
+It uses:
 
-Booking endpoint: https://automationintesting.online/booking/swagger-ui/index.html  
-Optionally, you also have the Authentican endpoint: https://automationintesting.online/auth/swagger-ui/index.html
+- **Java 17** as the programming language  
+- **Cucumber** for BDD-style feature files  
+- **Rest-Assured** for REST API automation  
+- **JUnit 5** and **Cucumber JUnit Engine** for test execution  
+- **Jackson** for JSON serialization/deserialization  
+- **Lombok** for cleaner POJOs  
+- **SLF4J + Logback** for logging  
 
-### Swagger
-This website is an external application which is not in our control.  
-We noticed that the Swagger documentation is sometimes not available on the mentioned URL above.  
-As a backup, you can find the Swagger documentation in this repository at [src/test/resources/spec/booking.yaml](src/test/resources/spec/booking.yaml)
+The framework is **modular, maintainable, and easily extendable** with centralized configurations and utilities.
 
-The Open API Spec file is only supported in the Ultimate version of IntelliJ IDEA. But you can copy the content of the file and paste it in an online Swagger editor like https://editor.swagger.io/ to visualize the API documentation.
+---
 
-### Authentication
-In order to authenticate yourself, the required credentials are:
-* Username: `admin`
-* Password: `password`
+## 📂 Project Structure
 
-## Task
-You are provided with an extremely basic API test project.
+```markdown
+API_Testing_Kata/
+├── 📂 src/
+│   ├── 📂 main/java/com/booking/
+│   │   ├── 📂 config/
+│   │   ├── 📂 constants/
+│   │   ├── 📂 pojo/
+│   │   └── 📂 utils/
+│   └── 📂 test/java/com/booking/
+│       ├── 📂 context/
+│       ├── 📂 constants/
+│       ├── 📂 stepdefinitions/
+│       └── 📂 hooks/
+│   │   └── 📂 utils/
+├── 📂 src/test/resources/
+│   ├── 📂 config/
+│   ├── 📂 features/
+│   ├── 📂 spec/
+│   └── 📂 testdata/
+├── ⚙️ pom.xml
+└── 📄 README.md
+---
 
-Please clone the project and create a new branch with your name. At the end, please push your branch to this project.
+## ⚙️ Prerequisites
 
-The project to start from, can be found here: https://github.com/freddyschoeters/API_Testing_kata
+- **Java 17** or higher  
+- **Maven 3.8+**  
+- IDE: IntelliJ IDEA (recommended) or Eclipse  
+- Optional: Postman for manual API verification  
 
-Your task is to set up an API Test Automation framework from this project using Java, Rest-Assured, and Cucumber (feel free to add more dependencies if required).
+---
 
-It is up to you to define the test cases. You don’t need to have a full coverage, but you need to show enough variation on the types of tests that you would need to write and execute, and what to check in the response.
+## 🛠️ Installation
 
-This kata has the purpose to evaluate both your technical skills as well as your testing skills.
+### 1. Clone the repository:  
+```bash
+git clone https://github.com/your-username/API_Testing_Kata.git
+cd API_Testing_Kata
+```
 
-`For this task, you will use the booking endpoint.`
+### 2. Build the project:
+```bash
+mvn clean install
+```
 
+### 3. Run tests using Maven:
+```bash
+mvn test
+```
 
-## Requirements
-* Use Java as the programming language
-* Use Rest-Assured as the API testing library
-* Use Cucumber as the BDD framework
-* Design your codebase using a proper Java design pattern
-* Write good tests with correct checks
-* Use Git for version control and push your codebase to an open GitHub repository
-* Make regular commits to demonstrate your progress
+## 🧪 Running Tests
+### Run all feature files:
+```bash
+mvn test
+```
 
+### Run a specific feature file:
+```bash
+mvn test -Dcucumber.filter.tags="@booking"
+```
 
-## Deliverables
-* Your branch pushed in the provided project.
-* A comprehensive test suite covering the scenarios mentioned above
-* A well-structured codebase with proper design patterns and comments
-* Regular commits demonstrating your progress
+### Run tests from IntelliJ:
+```
+Right-click on the TestRunner class → Run → Run TestRunner.
+```
 
-## Evaluation Criteria
-* Being able to successfully run the tests
-* Correctness and completeness of the test suite
-* Quality of the codebase (design patterns, structure, code quality, …)
-* Use of Rest-Assured and Cucumber features
-* Commit history and progress demonstration
+## 📝 Features & Scenarios
+
+### Booking API
+
+- Create booking (with and without authentication)
+- Update booking
+- Delete booking
+- Get booking by ID
+
+### Auth API
+- Login with valid credentials
+- Handle authentication tokens
+
+## 🔧 Key Framework Features
+### Reusable TestContext
+- Stores auth tokens, booking IDs, responses to share across step definitions
+
+### Centralized Config & Constants
+- ConfigReader reads from config.properties
+- Global constants for keys, headers, endpoints
+
+### POJO-based JSON mapping
+- Jackson maps request/response JSON to strongly typed Java objects
+
+### Low Cyclomatic Complexity
+- Utility methods (e.g., JsonUtils) handle exception internally
+- Single-responsibility methods
+
+### Logging & Reporting
+- SLF4J + Logback logs all API requests/responses
+- Cucumber HTML + JSON reports
+
+### Tag-based Execution
+- Use @requiresAuth, @positive, @negative for flexible test selection
+
+## ⚡ Example Usage
+```
+// Step Definition example
+@Given("login using username {string} and password {string}")
+public void login(String username, String password) {
+    Response res = ApiUtils.authLogin("/auth/login",
+                    Map.of(AuthConstants.USERNAME, username,
+                           AuthConstants.PASSWORD, password));
+    context.setAuthToken(res.jsonPath().getString(AuthConstants.TOKEN));
+}
+```
+
+## Config & Test Data
+```
+- src/test/resources/config.properties – All configurable endpoints, credentials, and constants
+- src/test/resources/testdata/ – JSON files for bookings, auth, and negative test scenarios
+```
