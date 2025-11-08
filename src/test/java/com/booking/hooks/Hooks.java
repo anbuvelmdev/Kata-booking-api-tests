@@ -29,7 +29,10 @@ public class Hooks {
         String username = ConfigReader.get(ConfigKeys.AUTH_USERNAME);
         String password = ConfigReader.get(ConfigKeys.AUTH_PASSWORD);
 
-        Response res = ApiUtils.authLogin(endpoint, Map.of(AuthConstants.USERNAME, username, AuthConstants.PASSWORD, password));
+        String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL); // ensure ConfigKeys holds BASE_URL
+        Response res = ApiUtils.post(baseUrl, ConfigReader.get(ConfigKeys.AUTH_ENDPOINT),
+                Map.of(AuthConstants.USERNAME, username, AuthConstants.PASSWORD, password),
+                null);
         context.setAuthToken(res.jsonPath().getString(AuthConstants.TOKEN));
         log.info("Auth token acquired successfully");
     }

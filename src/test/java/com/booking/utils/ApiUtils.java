@@ -1,112 +1,44 @@
 package com.booking.utils;
 
-import com.booking.config.ConfigReader;
-import com.booking.constants.ConfigKeys;
-import com.booking.constants.HttpConstants;
-import com.booking.pojo.BookingRequest;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import org.slf4j.Logger;
-
-import java.util.Map;
-
+import io.restassured.specification.RequestSpecification;
 import static io.restassured.RestAssured.given;
 
-public class ApiUtils {
+public final class ApiUtils {
 
-    private static final Logger log = LogUtils.getLogger(ApiUtils.class);
-    private static final String BASE_URL = ConfigReader.get(ConfigKeys.BASE_URL);
-    public ApiUtils() {
-        RestAssured.baseURI = BASE_URL;
-    }
+    private ApiUtils() {}
 
-    public static Response authLogin(String authEndpoint, Map<String, String> credentials) {
+    public static Response post(String baseUrl, String endpoint, Object body, String token) {
+        RequestSpecification spec = RequestSpecFactory.create(baseUrl, token);
         return given()
-                .log().all()
-                .contentType(HttpConstants.JSON)
-                .body(credentials)
-                .post(BASE_URL + authEndpoint);
-    }
-
-
-    public Response postBooking(String endpoint, BookingRequest request, String token) {
-        return given()
-                .header(HttpConstants.AUTHORIZATION, "Bearer " + token)
-                .header(HttpConstants.CONTENT_TYPE, HttpConstants.JSON)
-                .body(request)
-                .log().all()
+                .spec(spec)
+                .body(body)
                 .when()
-                .post(BASE_URL + endpoint)
+                .post(endpoint)
                 .then()
                 .log().all()
                 .extract().response();
     }
 
-    public Response postBookingWithoutAuth(String endpoint, BookingRequest request) {
-        LogUtils.logApiRequest(log, "POST", endpoint, request);
+    public static Response put(String baseUrl, String endpoint, Object body, String token) {
+        RequestSpecification spec = RequestSpecFactory.create(baseUrl, token);
         return given()
-                .contentType(HttpConstants.JSON)
-                .body(request)
-                .log().all()
-                .when()
-                .post(BASE_URL + endpoint)
-                .then()
-                .log().all()
-                .extract().response();
-    }
-
-    public static Response getBooking(String endpoint, String token) {
-        LogUtils.logApiRequest(log, "GET", endpoint, null);
-        return  given()
-                .header(HttpConstants.COOKIE, "token=" + token)
-                .header(HttpConstants.CONTENT_TYPE, HttpConstants.JSON)
-                .log().all()
-                .when()
-                .get(BASE_URL + endpoint)
-                .then()
-                .log().all()
-                .extract().response();
-    }
-
-    public static Response getBookingWithoutAuth(String endpoint) {
-        LogUtils.logApiRequest(log, "GET", endpoint, null);
-        return  given()
-                .contentType(HttpConstants.JSON)
-                .log().all()
-                .when()
-                .get(BASE_URL + endpoint)
-                .then()
-                .log().all()
-                .extract().response();
-    }
-
-    public static Response putRequest(String endpoint, Object body, String token) {
-        LogUtils.logApiRequest(log, "PUT", endpoint, body);
-        return given()
-                .log().all()
-                .header(HttpConstants.COOKIE, "token=" + token)
-                .header(HttpConstants.CONTENT_TYPE, HttpConstants.JSON)
+                .spec(spec)
                 .body(body)
                 .when()
                 .put(endpoint)
                 .then()
                 .log().all()
-                .extract()
-                .response();
+                .extract().response();
     }
 
-    public static Response deleteRequest(String endpoint, String token) {
-        LogUtils.logApiRequest(log, "DELETE", endpoint, null);
-        return given()
-                .header(HttpConstants.COOKIE, "token=" + token)
-                .header(HttpConstants.CONTENT_TYPE, HttpConstants.JSON)
-                .delete(endpoint);
+    public static Response get(String baseUrl, String endpoint, String token) {
+        RequestSpecification spec = RequestSpecFactory.create(baseUrl, token);
+        return given().spec(spec).when().get(endpoint).then().log().all().extract().response();
     }
 
-    public static Response deleteRequestWithoutAuth(String endpoint) {
-        LogUtils.logApiRequest(log, "DELETE", endpoint, null);
-        return given()
-                .header(HttpConstants.CONTENT_TYPE, HttpConstants.JSON)
-                .delete(endpoint);
+    public static Response delete(String baseUrl, String endpoint, String token) {
+        RequestSpecification spec = RequestSpecFactory.create(baseUrl, token);
+        return given().spec(spec).when().delete(endpoint).then().log().all().extract().response();
     }
 }

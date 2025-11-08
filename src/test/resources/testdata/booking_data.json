@@ -23,6 +23,17 @@
       "checkout": "2025-11-15"
     }
   },
+  "bookingMissingFirstname": {
+    "roomid": 1,
+    "lastname": "Doe",
+    "email": "john.doe@example.com",
+    "phone": "12345678901",
+    "depositpaid": true,
+    "bookingdates": {
+      "checkin": "2025-11-10",
+      "checkout": "2025-11-15"
+    }
+  },
   "firstnameTooLong": {
     "roomid": 1,
     "firstname": "John Doe And John Dafurol",
@@ -47,7 +58,7 @@
       "checkout": "2025-11-15"
     }
   },
-   "lastnameTooShort": {
+  "lastnameTooShort": {
     "roomid": 1,
     "firstname": "John",
     "lastname": "Doe And John Dafurol John Gofed Doe And John Dafurol John Gofed",
@@ -59,7 +70,7 @@
       "checkout": "2025-11-15"
     }
   },
-   "lastnameTooLong": {
+  "lastnameTooLong": {
     "roomid": 1,
     "firstname": "John",
     "lastname": "Do",
@@ -71,7 +82,7 @@
       "checkout": "2025-11-15"
     }
   },
-   "phoneInvalidShort": {
+  "phoneInvalidShort": {
     "roomid": 1,
     "firstname": "John",
     "lastname": "Doe",
@@ -83,7 +94,7 @@
       "checkout": "2025-11-15"
     }
   },
-    "phoneInvalidLong": {
+  "phoneInvalidLong": {
     "roomid": 1,
     "firstname": "John",
     "lastname": "Doe",
@@ -167,7 +178,7 @@
       "checkout": "2025-11-15"
     }
   },
-   "updateLastnameTooShort": {
+  "updateLastnameTooShort": {
     "roomid": 1,
     "firstname": "John",
     "lastname": "Doe And John Dafurol John Gofed Doe And John Dafurol John Gofed",
@@ -179,7 +190,7 @@
       "checkout": "2025-11-15"
     }
   },
-   "updateLastnameTooLong": {
+  "updateLastnameTooLong": {
     "roomid": 1,
     "firstname": "John",
     "lastname": "Do",
@@ -191,7 +202,7 @@
       "checkout": "2025-11-15"
     }
   },
-   "updatePhoneInvalidShort": {
+  "updatePhoneInvalidShort": {
     "roomid": 1,
     "firstname": "John",
     "lastname": "Doe",
@@ -203,7 +214,7 @@
       "checkout": "2025-11-15"
     }
   },
-    "updatePhoneInvalidLong": {
+  "updatePhoneInvalidLong": {
     "roomid": 1,
     "firstname": "John",
     "lastname": "Doe",
@@ -261,4 +272,4 @@
       "checkout": "2025-11-15"
     }
   }
-  }
+}

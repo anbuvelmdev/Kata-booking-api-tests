@@ -1,5 +1,8 @@
 package com.booking.stepdefinitions;
 
+import com.booking.config.ConfigReader;
+import com.booking.constants.AuthConstants;
+import com.booking.constants.ConfigKeys;
 import com.booking.constants.FilePaths;
 import com.booking.utils.*;
 import com.booking.context.TestContext;
@@ -14,6 +17,7 @@ import org.junit.Assert;
 import org.slf4j.Logger;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Random;
 
 public class BookingSteps {
@@ -30,7 +34,8 @@ public class BookingSteps {
 
     @Given("user loads booking data from {string}")
     public void user_loads_booking_data_from(String testDataKey){
-        bookingRequest = JsonUtils.loadBookingData(FilePaths.TESTDATA_PATH + "booking_data.json", testDataKey);
+        bookingRequest = JsonUtils.loadJson(FilePaths.TESTDATA_PATH + "booking_data.json", testDataKey, BookingRequest.class);
+
         bookingRequest.setRoomid(new Random().nextInt(100) + 1); // For dynamic roomID
         Assert.assertNotNull("Booking data should be loaded from JSON", bookingRequest);
         log.info("Verified booking request {}", bookingRequest);
@@ -38,9 +43,11 @@ public class BookingSteps {
 
     @When("user sends a POST request to {string} with booking details")
     public void user_sends_a_post_request_to_with_booking_details(String endpoint) throws IOException {
-
-        bookingApi = new ApiUtils();
-        response = bookingApi.postBookingWithoutAuth(endpoint, bookingRequest);
+        String token = context.getAuthToken();
+        String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL); // ensure ConfigKeys holds BASE_URL
+        response = ApiUtils.post(baseUrl, endpoint,
+                bookingRequest,
+                token);
         // deserialize to POJO for the assertions
         bookingResponse = response.as(BookingResponse.class);
         log.info("POST request sent to create booking");

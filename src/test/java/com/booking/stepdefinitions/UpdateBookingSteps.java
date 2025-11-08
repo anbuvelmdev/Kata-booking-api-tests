@@ -37,7 +37,7 @@ public class UpdateBookingSteps {
 
     @Given("user loads required booking data from {string}")
     public void user_loads_required_booking_data_from(String testDataKey){
-        bookingRequest = JsonUtils.loadBookingData(FilePaths.TESTDATA_PATH + "booking_data.json", testDataKey);
+        bookingRequest = JsonUtils.loadJson(FilePaths.TESTDATA_PATH + "booking_data.json", testDataKey, BookingRequest.class);
         Assert.assertNotNull("Booking data should be loaded from JSON", bookingRequest);
         log.info("Verified booking request {}", bookingRequest);
     }
@@ -45,9 +45,11 @@ public class UpdateBookingSteps {
     @When("user sends a PUT request to {string} with booking details")
     public void user_sends_a_put_request_to_with_booking_details(String endpoint) throws IOException {
         String token = context.getAuthToken();
-        bookingApi = new ApiUtils();
-        response = ApiUtils.putRequest(endpoint, bookingRequest, token);
-        log.info("PUT request sent to create booking");
+        String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL); // ensure ConfigKeys holds BASE_URL
+        response = ApiUtils.put(baseUrl, endpoint,
+                bookingRequest,
+                token);
+        log.info("PUT request sent to update booking");
     }
 
     @Then("user update response booking status code should be {int}")

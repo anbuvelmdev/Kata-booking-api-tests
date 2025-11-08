@@ -1,5 +1,7 @@
 package com.booking.stepdefinitions;
 
+import com.booking.config.ConfigReader;
+import com.booking.constants.ConfigKeys;
 import com.booking.context.TestContext;
 import com.booking.utils.ApiUtils;
 import com.booking.utils.LogUtils;
@@ -33,29 +35,35 @@ public class DeleteBookingSteps {
     @When("user sends DELETE request to {string}")
     public void user_sends_DELETE_request(String endpoint) {
         String resolvedEndpoint = endpoint+ bookingId;
-        log.info("Sending DELETE request to endpoint: {}", resolvedEndpoint);
+        log.info("Sending DELETE valid request to endpoint: {}", resolvedEndpoint);
 
         String token = context.getAuthToken();
-        bookingApi = new ApiUtils();
-        response = ApiUtils.deleteRequest(resolvedEndpoint, token);
+        String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL); // ensure ConfigKeys holds BASE_URL
+        response = ApiUtils.delete(baseUrl, resolvedEndpoint,
+                token);
         context.setResponse(response);
     }
 
     @When("user sends DELETE request unauthorized to {string}")
     public void user_sends_DELETE_request_unauthorized_to(String endpoint) {
         String resolvedEndpoint = endpoint+ bookingId;
-        log.info("Sending DELETE request to endpoint: {}", resolvedEndpoint);
+        log.info("Sending DELETE unauthorized request to endpoint: {}", resolvedEndpoint);
 
-        bookingApi = new ApiUtils();
-        response = ApiUtils.deleteRequestWithoutAuth(resolvedEndpoint);
+        String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL); // ensure ConfigKeys holds BASE_URL
+        response = ApiUtils.delete(baseUrl, resolvedEndpoint,
+                "");
         context.setResponse(response);
     }
 
     @When("user send a DELETE request invalid token to {string}")
     public void user_send_a_DELETE_request_invalid_token_to(String endpoint) {
+        String resolvedEndpoint = endpoint+ bookingId;
+        log.info("Sending DELETE invalid request to endpoint: {}", resolvedEndpoint);
 
-        String token = "invalid-token-123456";
-        response = ApiUtils.getBooking(endpoint+ bookingId, token);
+        String token = ConfigReader.get(ConfigKeys.DUMMY_TOKEN);
+        String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL); // ensure ConfigKeys holds BASE_URL
+        response = ApiUtils.delete(baseUrl, resolvedEndpoint,
+                token);
     }
 
     @Then("user response delete status code should be {int}")

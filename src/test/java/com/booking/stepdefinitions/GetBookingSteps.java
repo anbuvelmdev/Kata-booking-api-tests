@@ -1,5 +1,7 @@
 package com.booking.stepdefinitions;
 
+import com.booking.config.ConfigReader;
+import com.booking.constants.ConfigKeys;
 import com.booking.pojo.BookingResponse;
 import com.booking.utils.ApiUtils;
 import com.booking.context.TestContext;
@@ -28,19 +30,24 @@ public class GetBookingSteps {
     @When("user send a GET request to {string}")
     public void user_send_a_get_request_to(String endpoint) {
         String token = context.getAuthToken();
-        response = ApiUtils.getBooking(endpoint, token);
+        String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL); // ensure ConfigKeys holds BASE_URL
+        response = ApiUtils.get(baseUrl, endpoint,
+                token);
     }
 
     @When("user send a GET request invalid token to {string}")
     public void user_send_a_GET_request_invalid_token_to(String endpoint) {
-        String token = "invalid-token-123456";
-        response = ApiUtils.getBooking(endpoint, token);
+        String token = ConfigReader.get(ConfigKeys.DUMMY_TOKEN);
+        String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL); // ensure ConfigKeys holds BASE_URL
+        response = ApiUtils.get(baseUrl, endpoint,
+                token);
     }
 
     @When("user send a GET request to {string} without token")
     public void user_send_a_get_request_without_token(String endpoint) {
-        bookingApi = new ApiUtils();
-        response = ApiUtils.getBookingWithoutAuth(endpoint);
+        String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL); // ensure ConfigKeys holds BASE_URL
+        response = ApiUtils.get(baseUrl, endpoint,
+                "");
     }
 
     @Then("user get response booking status code should be {int}")

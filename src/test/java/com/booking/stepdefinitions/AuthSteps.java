@@ -32,10 +32,10 @@ public class AuthSteps {
 
     @Given("login using username {string} and password {string}")
     public void login_using_username_and_password(String username, String password) {
-        response = ApiUtils.authLogin(ConfigReader.get(ConfigKeys.AUTH_ENDPOINT), Map.of(AuthConstants.USERNAME, username, AuthConstants.PASSWORD, password));
-        String token = response.jsonPath().getString(AuthConstants.TOKEN);
-        log.info(token, "token");
-        context.setAuthToken(token);
+        String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL); // ensure ConfigKeys holds BASE_URL
+         response = ApiUtils.post(baseUrl, ConfigReader.get(ConfigKeys.AUTH_ENDPOINT),
+                Map.of(AuthConstants.USERNAME, username, AuthConstants.PASSWORD, password),
+                null);
     }
 
     @Then("user should receive auth status code {int}")

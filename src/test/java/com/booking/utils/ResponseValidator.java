@@ -18,5 +18,26 @@ public class ResponseValidator {
         );
     }
 
+    public static void validateJsonHasKey(Response response, String jsonPath) {
+        Object value = response.jsonPath().get(jsonPath);
+        Assert.assertNotNull(
+                "Expected key '" + jsonPath + "' not found or value is null in response: " + response.asString(),
+                value
+        );
+    }
+
+    public static void validateJsonEquals(Response response, String jsonPath, Object expected) {
+        Object actual = response.jsonPath().get(jsonPath);
+        Assert.assertNotNull(
+                "Expected key '" + jsonPath + "' not found in response: " + response.asString(),
+                actual
+        );
+        Assert.assertEquals(
+                "Mismatch for key '" + jsonPath + "'.",
+                expected,
+                actual
+        );
+    }
+
 
 }
