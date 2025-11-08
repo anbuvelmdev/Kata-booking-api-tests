@@ -15,6 +15,9 @@ import io.cucumber.java.en.*;
 import org.junit.Assert;
 import org.slf4j.Logger;
 
+import java.io.IOException;
+import java.util.Random;
+
 public class UpdateBookingSteps {
 
     private Response response;
@@ -32,18 +35,23 @@ public class UpdateBookingSteps {
        log.info("Checking booking ID exists: {}", bookingId);
     }
 
-    @When("user updates booking {string} with new details")
-    public void user_updates_booking_with_new_details(String bookingId) {
-        String token = context.getAuthToken();
-        bookingRequest = JsonUtils.loadBookingData(FilePaths.TESTDATA_PATH + FilePaths.UPDATE_BOOKING_TESTDATA_FILE);
-        Assert.assertNotNull("Booking data to update should be loaded from JSON", bookingRequest);
+    @Given("user loads required booking data from {string}")
+    public void user_loads_required_booking_data_from(String dataFile){
+        bookingRequest = JsonUtils.loadBookingData(FilePaths.TESTDATA_PATH + dataFile);
+        bookingRequest.setRoomid(new Random().nextInt(100) + 1); // For dynamic roomID
+        Assert.assertNotNull("Booking data should be loaded from JSON", bookingRequest);
         log.info("Verified booking request {}", bookingRequest);
-
-        bookingApi = new ApiUtils();
-        response = ApiUtils.putRequest(ConfigReader.get(ConfigKeys.BOOKING_BY_ID_ENDPOINT) + bookingId, bookingRequest, token);
     }
 
-    @Then("the response update booking status code should be {int}")
+    @When("user sends a PUT request to {string} with booking details")
+    public void user_sends_a_put_request_to_with_booking_details(String endpoint) throws IOException {
+        String token = context.getAuthToken();
+        bookingApi = new ApiUtils();
+        response = ApiUtils.putRequest(endpoint, bookingRequest, token);
+        log.info("PUT request sent to create booking");
+    }
+
+    @Then("user response update booking status code should be {int}")
     public void the_response_update_booking_status_code_should_be(int expectedStatusCode) {
         ResponseValidator.validateStatusCode(response, expectedStatusCode);
     }

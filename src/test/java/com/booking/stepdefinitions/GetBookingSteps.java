@@ -31,8 +31,8 @@ public class GetBookingSteps {
         response = ApiUtils.getBookingWithoutAuth(endpoint);
     }
 
-    @Then("the response get booking status code should be {int}")
-    public void the_response_get_booking_status_code_should_be(int expectedStatusCode) {
+    @Then("user response get booking status code should be {int}")
+    public void user_response_get_booking_status_code_should_be(int expectedStatusCode) {
         ResponseValidator.validateStatusCode(response, expectedStatusCode);
     }
 

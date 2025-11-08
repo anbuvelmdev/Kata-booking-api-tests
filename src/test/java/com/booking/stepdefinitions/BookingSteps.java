@@ -65,4 +65,12 @@ public class BookingSteps {
         boolean isValid = body.contains(keyword);
         Assert.assertTrue("Validation failed for type: " + type, isValid);
     }
+
+    @Then("response should contain error {string}")
+    public void response_should_contain_error(String type) {
+        String body = response.asString();
+        String keyword = ValidationConfig.getValidationKey(type);
+        boolean isValid = body.contains(keyword);
+        Assert.assertTrue("Error validation failed for type: " + type, isValid);
+    }
 }

@@ -8,6 +8,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 import io.restassured.response.Response;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.junit.jupiter.api.Assertions;
 
@@ -31,7 +32,7 @@ public class DeleteBookingSteps {
 
     @When("user sends DELETE request to {string}")
     public void user_sends_DELETE_request(String endpoint) {
-        String resolvedEndpoint = endpoint.replace("{id}", bookingId);
+        String resolvedEndpoint = endpoint+ bookingId;
         log.info("Sending DELETE request to endpoint: {}", resolvedEndpoint);
 
         String token = context.getAuthToken();
@@ -41,8 +42,8 @@ public class DeleteBookingSteps {
         context.setResponse(response);
     }
 
-    @Then("the response delete status code should be {int}")
-    public void the_response_delete_status_code_should_be(int expectedStatusCode) {
+    @Then("user response delete status code should be {int}")
+    public void user_response_delete_status_code_should_be(int expectedStatusCode) {
         ResponseValidator.validateStatusCode(response, expectedStatusCode);
     }
 
@@ -53,4 +54,17 @@ public class DeleteBookingSteps {
         Assertions.assertTrue(body.contains("Deleted") || body.isEmpty(),
                 "Booking deletion confirmation not found in response");
     }
+
+//    @Then("response should contain error {string}")
+//    public void response_should_contain_error(String expectedError) {
+//        response = context.getResponse();
+//        Assert.assertNotNull("Response should not be null", response);
+//        String responseBody = response.asString();
+//        log.info("Response body: {}", responseBody);
+//        Assert.assertTrue(
+//                "Expected error message not found in response. Expected: " + expectedError,
+//                responseBody.contains(expectedError)
+//        );
+//    }
+
 }
