@@ -48,16 +48,13 @@ API_Testing_Kata/
 │   └── 📂 testdata/
 ├── ⚙️ pom.xml
 └── 📄 README.md
----
+```
 
 ## ⚙️ Prerequisites
-
 - **Java 17** or higher  
 - **Maven 3.8+**  
 - IDE: IntelliJ IDEA (recommended) or Eclipse  
-- Optional: Postman for manual API verification  
-
----
+- Optional: Postman for manual API verification
 
 ## 🛠️ Installation
 
@@ -77,20 +74,61 @@ mvn clean install
 mvn test
 ```
 
+### 4. Run a single feature file:
+```bash
+mvn test -Dcucumber.features="src/test/resources/features/auth.feature"
+```
+
+### 5. Run specific tagged tests:
+```bash
+mvn test -Dcucumber.filter.tags="@auth"
+```
+
 ## 🧪 Running Tests
 ### Run all feature files:
 ```bash
 mvn test
 ```
 
-### Run a specific feature file:
+### Run a specific feature file (using tag):
 ```bash
-mvn test -Dcucumber.filter.tags="@booking"
+mvn test -Dcucumber.filter.tags="@positive"
 ```
 
 ### Run tests from IntelliJ:
 ```
 Right-click on the TestRunner class → Run → Run TestRunner.
+```
+
+## 🔐 Dummy Token Configuration
+If authentication context isn’t available, the framework uses a dummy token fallback.
+
+You can define it in your .env or config.properties:
+```
+DUMMY_TOKEN=dummy-token-123456
+```
+Or it will automatically use:
+```
+String token = "dummy-token-123456";
+``` 
+
+## 🧾 Test Data Management
+All test data is consolidated in booking_test_data.json under /src/test/resources/testdata/.
+
+Each key in the JSON corresponds to a test case:
+```json
+{
+  "validBooking": {
+    "firstname": "John",
+    "lastname": "Doe",
+    "email": "john@example.com"
+  },
+  "invalidBooking": {
+    "firstname": "",
+    "lastname": "Smith",
+    "email": "invalid"
+  }
+}
 ```
 
 ## 📝 Features & Scenarios
