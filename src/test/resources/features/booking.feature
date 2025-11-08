@@ -1,44 +1,28 @@
-# ===============================
-# Positive Booking Scenarios
-# ===============================
-@booking @noauth @positive
-Feature: Hotel Booking API - Positive Scenarios
+@booking @requiresAuth
+Feature: Hotel Booking API
 
-  @createBooking
+  @createBooking @positive
   Scenario Outline: Create booking with valid data
-    Given user loads booking data from "<dataFile>"
+    Given user loads booking data from "<testDataKey>"
     When user sends a POST request to "<endpoint>" with booking details
     Then user should receive booking status code <expectedStatus>
     And validate response based on "<validationType>"
 
     Examples:
-      | dataFile          | endpoint | expectedStatus | validationType |
-      | booking_data.json | /booking | 201            | validBooking   |
+      | testDataKey  | endpoint | expectedStatus | validationType |
+      | validBooking | /booking | 201            | bookingid      |
 
-  @getBooking
-  Scenario: Get booking details by valid ID
-    When I send a GET request to "/booking/1"
-    Then user response get booking status code should be 200
-    And the response should contain booking details with valid fields
 
-  @updateBooking
-  Scenario: Update booking with valid ID
-    Given user loads required booking data from "<dataFile>"
-    When user sends a PUT request to "<endpoint>" with booking details
-    Then user response update booking status code should be <expectedStatus>
-    And response should contain updated booking details
+  @createBooking @Negative
+  Scenario Outline: Create booking with invalid or missing data
+    Given user loads booking data from "<testDataKey>"
+    When user sends a POST request to "<endpoint>" with booking details
+    Then user should receive booking status code <expectedStatus>
+    And validate response should contain error "<expectedError>"
 
     Examples:
-      | dataFile                 | endpoint    | expectedStatus |
-      | booking_update_data.json | /booking/75 | 200            |
-
-  @deleteBooking
-  Scenario Outline: Delete booking by valid ID
-    Given a booking ID "<id>"
-    When user sends DELETE request to "<endpoint>"
-    Then user response delete status code should be <expectedStatus>
-    And the booking should be removed successfully
-
-    Examples:
-      | id | endpoint  | expectedStatus |
-      | 75 | /booking/ | 201            |
+      | testDataKey             | endpoint | expectedStatus | expectedError                       |
+      | bookingInvalidFirstname | /booking | 400            | size must be between 3 and 18       |
+      | bookingMissingFirstname | /booking | 400            | Firstname should not be blank       |
+      | bookingInvalidEmail     | /booking | 400            | must be a well-formed email address |
+      | bookingInvalidDates     | /booking | 409            | Failed to create booking            |

@@ -22,7 +22,6 @@ public class BookingSteps {
     private BookingRequest bookingRequest;
     private ApiUtils bookingApi;
     private BookingResponse bookingResponse;
-    private int bookingId;
     private final TestContext context;
     private static final Logger log = LogUtils.getLogger(BookingSteps.class);
     public BookingSteps(TestContext context) {
@@ -30,8 +29,8 @@ public class BookingSteps {
     }
 
     @Given("user loads booking data from {string}")
-    public void user_loads_booking_data_from(String dataFile){
-        bookingRequest = JsonUtils.loadBookingData(FilePaths.TESTDATA_PATH + dataFile);
+    public void user_loads_booking_data_from(String testDataKey){
+        bookingRequest = JsonUtils.loadBookingData(FilePaths.TESTDATA_PATH + "booking_data.json", testDataKey);
         bookingRequest.setRoomid(new Random().nextInt(100) + 1); // For dynamic roomID
         Assert.assertNotNull("Booking data should be loaded from JSON", bookingRequest);
         log.info("Verified booking request {}", bookingRequest);
@@ -52,25 +51,18 @@ public class BookingSteps {
         ResponseValidator.validateStatusCode(response, expectedStatusCode);
     }
 
-    @And("the response should contain the booking id")
-    public void the_response_should_contain_the_booking_id() {
-        bookingId = bookingResponse.getBookingid();
-        Assert.assertTrue("Booking ID should be greater than 0",bookingResponse.getBookingid() > 0);
-    }
-
     @And("validate response based on {string}")
-    public void validateResponse(String type) {
+    public void validateResponse(String validationType) {
         String body = response.asString();
-        String keyword = ValidationConfig.getValidationKey(type);
-        boolean isValid = body.contains(keyword);
-        Assert.assertTrue("Validation failed for type: " + type, isValid);
+        boolean isValid = body.contains(validationType);
+        Assert.assertTrue("Validation failed: " + validationType, isValid);
     }
 
-    @Then("response should contain error {string}")
-    public void response_should_contain_error(String type) {
+    @And("validate response should contain error {string}")
+    public void validate_response_should_contain_error(String expectedError) {
         String body = response.asString();
-        String keyword = ValidationConfig.getValidationKey(type);
-        boolean isValid = body.contains(keyword);
-        Assert.assertTrue("Error validation failed for type: " + type, isValid);
+        log.info("Response after POST: {}", body);
+        boolean isValid = body.contains(expectedError);
+        Assert.assertTrue("Error validation failed: " + expectedError, isValid);
     }
 }

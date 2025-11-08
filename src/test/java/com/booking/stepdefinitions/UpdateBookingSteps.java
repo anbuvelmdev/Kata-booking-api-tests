@@ -36,9 +36,8 @@ public class UpdateBookingSteps {
     }
 
     @Given("user loads required booking data from {string}")
-    public void user_loads_required_booking_data_from(String dataFile){
-        bookingRequest = JsonUtils.loadBookingData(FilePaths.TESTDATA_PATH + dataFile);
-        bookingRequest.setRoomid(new Random().nextInt(100) + 1); // For dynamic roomID
+    public void user_loads_required_booking_data_from(String testDataKey){
+        bookingRequest = JsonUtils.loadBookingData(FilePaths.TESTDATA_PATH + "booking_data.json", testDataKey);
         Assert.assertNotNull("Booking data should be loaded from JSON", bookingRequest);
         log.info("Verified booking request {}", bookingRequest);
     }
@@ -51,14 +50,24 @@ public class UpdateBookingSteps {
         log.info("PUT request sent to create booking");
     }
 
-    @Then("user response update booking status code should be {int}")
-    public void the_response_update_booking_status_code_should_be(int expectedStatusCode) {
+    @Then("user update response booking status code should be {int}")
+    public void user_update_response_booking_status_code_should_be(int expectedStatusCode) {
         ResponseValidator.validateStatusCode(response, expectedStatusCode);
     }
 
-    @Then("response should contain updated booking details")
-    public void response_should_contain_updated_booking_details() {
-        String firstName = response.jsonPath().getString(BookingResponseKeys.FIRSTNAME);
-        Assert.assertEquals("John", firstName);
+    @And("validate update booking response based on {string}")
+    public void validate_update_booking_response_based_on (String expectedError) {
+        String body = response.asString();
+        log.info("Response after GET: {}", body);
+        boolean isValid = body.contains(expectedError);
+        Assert.assertTrue("Validation failed: " + expectedError, isValid);
+    }
+
+    @Then("validate update booking response should contain error {string}")
+    public void validate_update_booking_response_should_contain_error(String expectedError) {
+        String body = response.asString();
+        log.info("Response after GET: {}", body);
+        boolean isValid = body.contains(expectedError);
+        Assert.assertTrue("Error validation failed: " + expectedError, isValid);
     }
 }

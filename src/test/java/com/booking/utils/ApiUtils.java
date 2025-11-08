@@ -36,7 +36,7 @@ public class ApiUtils {
                 .body(request)
                 .log().all()
                 .when()
-                .post(endpoint)
+                .post(BASE_URL + endpoint)
                 .then()
                 .log().all()
                 .extract().response();
@@ -49,7 +49,7 @@ public class ApiUtils {
                 .body(request)
                 .log().all()
                 .when()
-                .post(endpoint)
+                .post(BASE_URL + endpoint)
                 .then()
                 .log().all()
                 .extract().response();
@@ -58,11 +58,11 @@ public class ApiUtils {
     public static Response getBooking(String endpoint, String token) {
         LogUtils.logApiRequest(log, "GET", endpoint, null);
         return  given()
-                .header(HttpConstants.AUTHORIZATION, "Bearer " + token)
+                .header(HttpConstants.COOKIE, "token=" + token)
                 .header(HttpConstants.CONTENT_TYPE, HttpConstants.JSON)
                 .log().all()
                 .when()
-                .get(endpoint)
+                .get(BASE_URL + endpoint)
                 .then()
                 .log().all()
                 .extract().response();
@@ -74,7 +74,7 @@ public class ApiUtils {
                 .contentType(HttpConstants.JSON)
                 .log().all()
                 .when()
-                .get(endpoint)
+                .get(BASE_URL + endpoint)
                 .then()
                 .log().all()
                 .extract().response();
@@ -84,7 +84,7 @@ public class ApiUtils {
         LogUtils.logApiRequest(log, "PUT", endpoint, body);
         return given()
                 .log().all()
-                .header(HttpConstants.AUTHORIZATION, "Bearer " + token)
+                .header(HttpConstants.COOKIE, "token=" + token)
                 .header(HttpConstants.CONTENT_TYPE, HttpConstants.JSON)
                 .body(body)
                 .when()
@@ -98,7 +98,7 @@ public class ApiUtils {
     public static Response deleteRequest(String endpoint, String token) {
         LogUtils.logApiRequest(log, "DELETE", endpoint, null);
         return given()
-                .header(HttpConstants.AUTHORIZATION, "Bearer " + token)
+                .header(HttpConstants.COOKIE, "token=" + token)
                 .header(HttpConstants.CONTENT_TYPE, HttpConstants.JSON)
                 .delete(endpoint);
     }

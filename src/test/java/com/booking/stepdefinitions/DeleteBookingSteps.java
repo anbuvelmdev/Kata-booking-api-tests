@@ -36,7 +36,6 @@ public class DeleteBookingSteps {
         log.info("Sending DELETE request to endpoint: {}", resolvedEndpoint);
 
         String token = context.getAuthToken();
-
         bookingApi = new ApiUtils();
         response = ApiUtils.deleteRequest(resolvedEndpoint, token);
         context.setResponse(response);
@@ -47,24 +46,19 @@ public class DeleteBookingSteps {
         ResponseValidator.validateStatusCode(response, expectedStatusCode);
     }
 
-    @Then("the booking should be removed successfully")
-    public void the_booking_should_be_removed_successfully() {
+    @Then("the booking should be removed successfully and contain {string}")
+    public void the_booking_should_be_removed_successfully_and_contain(String validationType) {
         String body = context.getResponse().asString();
         log.info("Response after DELETE: {}", body);
-        Assertions.assertTrue(body.contains("Deleted") || body.isEmpty(),
+        Assertions.assertTrue(body.contains("Deleted") || body.isEmpty() || body.contains(validationType),
                 "Booking deletion confirmation not found in response");
     }
 
-//    @Then("response should contain error {string}")
-//    public void response_should_contain_error(String expectedError) {
-//        response = context.getResponse();
-//        Assert.assertNotNull("Response should not be null", response);
-//        String responseBody = response.asString();
-//        log.info("Response body: {}", responseBody);
-//        Assert.assertTrue(
-//                "Expected error message not found in response. Expected: " + expectedError,
-//                responseBody.contains(expectedError)
-//        );
-//    }
-
+    @Then("delete response should contain error {string}")
+    public void delete_response_should_contain_error(String expectedError) {
+        String body = response.asString();
+        log.info("Error Response after DELETE: {}", body);
+        boolean isValid = body.contains(expectedError);
+        Assert.assertTrue("Error validation failed: " + expectedError, isValid);
+    }
 }

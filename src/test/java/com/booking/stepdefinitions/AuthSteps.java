@@ -5,10 +5,14 @@ import com.booking.constants.AuthConstants;
 import com.booking.constants.ConfigKeys;
 import com.booking.utils.ApiUtils;
 import com.booking.context.TestContext;
+import com.booking.utils.LogUtils;
 import com.booking.utils.ResponseValidator;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.restassured.response.Response;
+import org.junit.Assert;
+import org.slf4j.Logger;
 
 import java.util.Map;
 
@@ -20,7 +24,7 @@ public class AuthSteps {
     private Response response;
     private static String authToken;
     private Map<String, String> credentials;
-
+    private static final Logger log = LogUtils.getLogger(AuthSteps.class);
     private final TestContext context;
     public AuthSteps(TestContext context) {
         this.context = context;
@@ -29,26 +33,31 @@ public class AuthSteps {
     @Given("login using username {string} and password {string}")
     public void login_using_username_and_password(String username, String password) {
         response = ApiUtils.authLogin(ConfigReader.get(ConfigKeys.AUTH_ENDPOINT), Map.of(AuthConstants.USERNAME, username, AuthConstants.PASSWORD, password));
-        String token = context.getAuthToken();
+        String token = response.jsonPath().getString(AuthConstants.TOKEN);
+        log.info(token, "token");
         context.setAuthToken(token);
     }
 
-    @Then("the response auth login status code should {int}")
-    public void verifyStatusCode(int expectedStatusCode) {
+    @Then("user should receive auth status code {int}")
+    public void user_should_receive_auth_status_code(int expectedStatusCode) {
         ResponseValidator.validateStatusCode(response, expectedStatusCode);
     }
 
-    @Then("the response should contain a token or error {string}")
-    public void verifyToken(String expectedError) {
-        authToken = response.jsonPath().getString(AuthConstants.TOKEN);
-        String error = response.jsonPath().getString(AuthConstants.ERROR);
-
-        if (expectedError.isEmpty()){
-            assertThat(authToken, notNullValue());
-        }else{
-            assertThat(error, notNullValue());
-        }
+    @And("validate auth token response based on {string}")
+    public void validate_auth_token_response_based_on(String validationType) {
+        String body = response.asString();
+        log.info( body, "auth");
+        boolean isValid = body.contains(validationType);
+        Assert.assertTrue("Validation failed: " + validationType, isValid);
     }
+
+    @And("validate auth token response should contain error {string}")
+    public void validate_auth_token_response_should_contain_error(String expectedError) {
+        String body = response.asString();
+        boolean isValid = body.contains(expectedError);
+        Assert.assertTrue("Error validation failed: " + expectedError, isValid);
+    }
+
 
     public static String getAuthToken() {
         return authToken;

@@ -8,6 +8,7 @@ public final class HttpConstants {
 
     // Common headers
     public static final String AUTHORIZATION = "Authorization";
+    public static final String COOKIE = "Cookie";
     public static final String CONTENT_TYPE = "Content-Type";
 
     // Prefer RestAssured built-in ContentType

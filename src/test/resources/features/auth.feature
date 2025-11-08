@@ -1,14 +1,24 @@
 @auth
 Feature: Authentication API
 
-  Scenario Outline: Login scenarios
+  @positive
+  Scenario Outline: Valid Login scenarios
     Given login using username "<username>" and password "<password>"
-    Then the response auth login status code should <expectedStatus>
-    And the response should contain a token or error "<expectedError>"
+    Then user should receive auth status code <expectedStatus>
+    And validate auth token response based on "<validationType>"
+
+    Examples:
+      | username | password | expectedStatus | validationType |
+      | admin    | password | 200            | token          |
+
+  @Negative
+  Scenario Outline: Invalid Login scenarios
+    Given login using username "<username>" and password "<password>"
+    Then user should receive auth status code <expectedStatus>
+    And validate auth token response should contain error "<expectedError>"
 
     Examples:
       | username      | password    | expectedStatus | expectedError       |
-      | admin         | password    | 200            |                     |
       | admin         | invalid     | 401            | Invalid credentials |
       |               |             | 401            | Invalid credentials |
       | admin         |             | 401            | Invalid credentials |
