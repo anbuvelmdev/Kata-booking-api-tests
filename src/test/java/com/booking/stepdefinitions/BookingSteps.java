@@ -8,6 +8,7 @@ import com.booking.utils.*;
 import com.booking.context.TestContext;
 import com.booking.pojo.BookingRequest;
 import com.booking.pojo.BookingResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -56,6 +57,11 @@ public class BookingSteps {
     @Then("user should receive booking status code {int}")
     public void user_should_receive_booking_status_code(int expectedStatusCode) {
         ResponseValidator.validateStatusCode(response, expectedStatusCode);
+    }
+
+    @Then("response should match schema {string}")
+    public void response_should_match_schema (String schemaFile) throws JsonProcessingException {
+        SchemaValidator.validateSchema(response, schemaFile);
     }
 
     @And("validate response based on {string}")

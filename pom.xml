@@ -25,6 +25,7 @@
         <lombok.version>1.18.38</lombok.version>
         <slf4j.version>2.0.17</slf4j.version>
         <logback.version>1.4.11</logback.version>
+        <schema.version>5.4.0</schema.version>
     </properties>
 
     <dependencies>
@@ -101,6 +102,13 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>${schema.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

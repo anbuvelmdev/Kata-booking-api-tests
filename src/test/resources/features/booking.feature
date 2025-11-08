@@ -7,10 +7,11 @@ Feature: Hotel Booking API
     When user sends a POST request to "<endpoint>" with booking details
     Then user should receive booking status code <expectedStatus>
     And validate response based on "<validationType>"
+    And response should match schema "<schemaFile>"
 
     Examples:
-      | testDataKey  | endpoint | expectedStatus | validationType |
-      | validBooking | /booking | 201            | bookingid      |
+      | testDataKey  | endpoint | expectedStatus | validationType | schemaFile                         |
+      | validBooking | /booking | 201            | bookingid      | booking_valid_response_schema.json |
 
 
   @createBooking @Negative
@@ -19,16 +20,17 @@ Feature: Hotel Booking API
     When user sends a POST request to "<endpoint>" with booking details
     Then user should receive booking status code <expectedStatus>
     And validate response should contain error "<expectedError>"
+    And response should match schema "<schemaFile>"
 
     Examples:
-      | testDataKey             | endpoint | expectedStatus | expectedError                       |
-      | firstnameTooShort       | /booking | 400            | size must be between 3 and 18       |
-      | firstnameTooLong        | /booking | 400            | size must be between 3 and 18       |
-      | bookingMissingFirstname | /booking | 400            | Firstname should not be blank       |
-      | lastnameTooShort        | /booking | 400            | size must be between 3 and 30       |
-      | lastnameTooLong         | /booking | 400            | size must be between 3 and 30       |
-      | bookingMissingLastname  | /booking | 400            | Lastname should not be blank        |
-      | phoneInvalidShort       | /booking | 400            | size must be between 11 and 21      |
-      | phoneInvalidLong        | /booking | 400            | size must be between 11 and 21      |
-      | bookingInvalidEmail     | /booking | 400            | must be a well-formed email address |
-      | bookingInvalidDates     | /booking | 409            | Failed to create booking            |
+      | testDataKey             | endpoint | expectedStatus | expectedError                       | schemaFile                |
+      | firstnameTooShort       | /booking | 400            | size must be between 3 and 18       | errors_array_schema.json   |
+      | firstnameTooLong        | /booking | 400            | size must be between 3 and 18       | errors_array_schema.json   |
+      | bookingMissingFirstname | /booking | 400            | Firstname should not be blank       | errors_array_schema.json   |
+      | lastnameTooShort        | /booking | 400            | size must be between 3 and 30       | errors_array_schema.json   |
+      | lastnameTooLong         | /booking | 400            | size must be between 3 and 30       | errors_array_schema.json   |
+      | bookingMissingLastname  | /booking | 400            | Lastname should not be blank        | errors_array_schema.json   |
+      | phoneInvalidShort       | /booking | 400            | size must be between 11 and 21      | errors_array_schema.json   |
+      | phoneInvalidLong        | /booking | 400            | size must be between 11 and 21      | errors_array_schema.json   |
+      | bookingInvalidEmail     | /booking | 400            | must be a well-formed email address | errors_array_schema.json   |
+      | bookingInvalidDates     | /booking | 409            | Failed to create booking            | error_generic_schema.json |
