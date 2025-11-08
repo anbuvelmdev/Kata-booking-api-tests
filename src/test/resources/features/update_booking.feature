@@ -5,7 +5,7 @@ Feature: Update Booking API
   Scenario: Update booking with valid ID
     Given user loads required booking data from "<testDataKey>"
     When user sends a PUT request to "<endpoint>" with booking details
-    Then user update response booking status code should be <expectedStatus>
+    Then user should receive status code <expectedStatus>
     And validate update booking response based on "<validationType>"
     And response should match schema "<schemaFile>"
 
@@ -17,7 +17,7 @@ Feature: Update Booking API
   Scenario Outline: Update booking with invalid data
     Given user loads required booking data from "<testDataKey>"
     When user sends a PUT request to "<endpoint>" with booking details
-    Then user update response booking status code should be <expectedStatus>
+    Then user should receive status code <expectedStatus>
     And validate update booking response should contain error "<expectedError>"
     And response should match schema "<schemaFile>"
 

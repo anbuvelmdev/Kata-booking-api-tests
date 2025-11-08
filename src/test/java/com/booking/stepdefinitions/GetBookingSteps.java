@@ -56,11 +56,6 @@ public class GetBookingSteps {
         log.info("GET request sent without token: {}", endpoint);
     }
 
-    @Then("user get response booking status code should be {int}")
-    public void user_get_response_booking_status_code_should_be(int expectedStatusCode) {
-        ResponseValidator.validateStatusCode(response, expectedStatusCode);
-    }
-
     @And("get response should contain the booking id")
     public void the_response_should_contain_the_booking_id() {
         bookingId = bookingResponse.getBookingid();

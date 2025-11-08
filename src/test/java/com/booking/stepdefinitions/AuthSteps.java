@@ -41,11 +41,6 @@ public class AuthSteps {
         log.info("POST auth request sent");
     }
 
-    @Then("user should receive auth status code {int}")
-    public void user_should_receive_auth_status_code(int expectedStatusCode) {
-        ResponseValidator.validateStatusCode(response, expectedStatusCode);
-    }
-
     @And("validate auth token response based on {string}")
     public void validate_auth_token_response_based_on(String validationType) {
         String body = response.asString();

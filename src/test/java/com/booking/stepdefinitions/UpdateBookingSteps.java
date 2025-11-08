@@ -53,11 +53,6 @@ public class UpdateBookingSteps {
         log.info("PUT request sent to booking endpoint: {}", endpoint);
     }
 
-    @Then("user update response booking status code should be {int}")
-    public void user_update_response_booking_status_code_should_be(int expectedStatusCode) {
-        ResponseValidator.validateStatusCode(response, expectedStatusCode);
-    }
-
     @And("validate update booking response based on {string}")
     public void validate_update_booking_response_based_on (String expectedError) {
         String body = response.asString();

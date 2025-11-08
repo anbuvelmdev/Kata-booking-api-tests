@@ -5,7 +5,7 @@ Feature: Hotel Booking API
   Scenario Outline: Create booking with valid data
     Given user loads booking data from "<testDataKey>"
     When user sends a POST request to "<endpoint>" with booking details
-    Then user should receive booking status code <expectedStatus>
+    Then user should receive status code <expectedStatus>
     And validate response based on "<validationType>"
     And response should match schema "<schemaFile>"
 
@@ -18,7 +18,7 @@ Feature: Hotel Booking API
   Scenario Outline: Create booking with invalid or missing data
     Given user loads booking data from "<testDataKey>"
     When user sends a POST request to "<endpoint>" with booking details
-    Then user should receive booking status code <expectedStatus>
+    Then user should receive status code <expectedStatus>
     And validate response should contain error "<expectedError>"
     And response should match schema "<schemaFile>"
 

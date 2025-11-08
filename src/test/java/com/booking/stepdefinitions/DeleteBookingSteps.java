@@ -70,11 +70,6 @@ public class DeleteBookingSteps {
         log.info("DELETE request sent invalid token: {}", bookingId);
     }
 
-    @Then("user response delete status code should be {int}")
-    public void user_response_delete_status_code_should_be(int expectedStatusCode) {
-        ResponseValidator.validateStatusCode(response, expectedStatusCode);
-    }
-
     @Then("the booking should be removed successfully and contain {string}")
     public void the_booking_should_be_removed_successfully_and_contain(String validationType) {
         String body = context.getResponse().asString();

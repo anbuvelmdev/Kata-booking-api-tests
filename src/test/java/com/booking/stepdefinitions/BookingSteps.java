@@ -55,11 +55,6 @@ public class BookingSteps {
         log.info("POST request sent to create booking");
     }
 
-    @Then("user should receive booking status code {int}")
-    public void user_should_receive_booking_status_code(int expectedStatusCode) {
-        ResponseValidator.validateStatusCode(response, expectedStatusCode);
-    }
-
     @And("validate response based on {string}")
     public void validateResponse(String validationType) {
         String body = response.asString();

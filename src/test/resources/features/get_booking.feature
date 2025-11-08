@@ -5,7 +5,7 @@ Feature: Get Booking API
   Scenario: Get booking details by valid ID
 
     When user send a GET request to "<endpoint>"
-    Then user get response booking status code should be <expectedStatus>
+    Then user should receive status code <expectedStatus>
     And validate get response should contain booking details
     And response should match schema "<schemaFile>"
 
@@ -16,7 +16,7 @@ Feature: Get Booking API
   @getBooking @Negative
   Scenario Outline: Get booking with invalid ID
     When user send a GET request to "<endpoint>"
-    Then user get response booking status code should be <expectedStatus>
+    Then user should receive status code <expectedStatus>
     And validate error message should contain "<expectedError>"
     And response should match schema "<schemaFile>"
 
@@ -29,7 +29,7 @@ Feature: Get Booking API
   @getBooking @Negative
   Scenario Outline: Get booking UnAuthorized
     When user send a GET request to "<endpoint>" without token
-    Then user get response booking status code should be <expectedStatus>
+    Then user should receive status code <expectedStatus>
     And validate error message should contain "<expectedError>"
     And response should match schema "<schemaFile>"
 
@@ -40,7 +40,7 @@ Feature: Get Booking API
   @getBooking @Negative
   Scenario Outline: Get booking Invalid Token
     When user send a GET request invalid token to "<endpoint>"
-    Then user get response booking status code should be <expectedStatus>
+    Then user should receive status code <expectedStatus>
     And validate error message should contain "<expectedError>"
     And response should match schema "<schemaFile>"
 
