@@ -178,7 +178,7 @@
       "checkout": "2025-11-15"
     }
   },
-  "updateLastnameTooShort": {
+  "updateLastnameTooLong": {
     "roomid": 1,
     "firstname": "John",
     "lastname": "Doe And John Dafurol John Gofed Doe And John Dafurol John Gofed",
@@ -190,7 +190,7 @@
       "checkout": "2025-11-15"
     }
   },
-  "updateLastnameTooLong": {
+  "updateLastnameTooShort": {
     "roomid": 1,
     "firstname": "John",
     "lastname": "Do",
