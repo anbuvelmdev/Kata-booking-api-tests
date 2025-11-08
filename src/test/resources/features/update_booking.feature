@@ -1,8 +1,8 @@
-@booking @updateapi
+@booking @updateapi @requiresAuth
 Feature: Update Booking API
 
-  Background:
-    Given login using username "admin" and password "password"
+#  Background:
+#    Given login using username "admin" and password "password"
 
   @positive
   Scenario: Update an existing booking by ID

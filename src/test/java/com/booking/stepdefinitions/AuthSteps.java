@@ -29,7 +29,7 @@ public class AuthSteps {
     @Given("login using username {string} and password {string}")
     public void login_using_username_and_password(String username, String password) {
         response = ApiUtils.authLogin(ConfigReader.get(ConfigKeys.AUTH_ENDPOINT), Map.of(AuthConstants.USERNAME, username, AuthConstants.PASSWORD, password));
-        String token = response.jsonPath().getString(AuthConstants.TOKEN);
+        String token = context.getAuthToken();
         context.setAuthToken(token);
     }
 

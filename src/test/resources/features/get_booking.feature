@@ -1,8 +1,8 @@
-@Booking @getapi
+@booking @getapi @requiresAuth
 Feature: Retrieve Booking details
 
-  Background:
-    Given login using username "admin" and password "password"
+#  Background:
+#    Given login using username "admin" and password "password"
 
   @positive
   Scenario: Get booking details by valid ID

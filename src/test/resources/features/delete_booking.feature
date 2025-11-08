@@ -1,8 +1,8 @@
-@booking @deleteapi
+@booking @deleteapi @requiresAuth
 Feature: Delete Booking API
 
-  Background:
-    Given login using username "admin" and password "password"
+#  Background:
+#    Given login using username "admin" and password "password"
 
   @positive
   Scenario: Delete an existing booking by ID
