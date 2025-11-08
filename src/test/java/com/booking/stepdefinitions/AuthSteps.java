@@ -1,5 +1,8 @@
 package com.booking.stepdefinitions;
 
+import com.booking.config.ConfigReader;
+import com.booking.constants.AuthConstants;
+import com.booking.constants.ConfigKeys;
 import com.booking.utils.ApiUtils;
 import com.booking.context.TestContext;
 import com.booking.utils.ResponseValidator;
@@ -25,8 +28,8 @@ public class AuthSteps {
 
     @Given("login using username {string} and password {string}")
     public void login_using_username_and_password(String username, String password) {
-        response = ApiUtils.authLogin("/auth/login", Map.of("username", username, "password", password));
-        String token = response.jsonPath().getString("token");
+        response = ApiUtils.authLogin(ConfigReader.get(ConfigKeys.AUTH_ENDPOINT), Map.of(AuthConstants.USERNAME, username, AuthConstants.PASSWORD, password));
+        String token = response.jsonPath().getString(AuthConstants.TOKEN);
         context.setAuthToken(token);
     }
 
@@ -37,8 +40,8 @@ public class AuthSteps {
 
     @Then("the response should contain a token or error {string}")
     public void verifyToken(String expectedError) {
-        authToken = response.jsonPath().getString("token");
-        String error = response.jsonPath().getString("error");
+        authToken = response.jsonPath().getString(AuthConstants.TOKEN);
+        String error = response.jsonPath().getString(AuthConstants.ERROR);
 
         if (expectedError.isEmpty()){
             assertThat(authToken, notNullValue());

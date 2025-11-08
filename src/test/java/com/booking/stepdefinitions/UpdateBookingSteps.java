@@ -1,5 +1,9 @@
 package com.booking.stepdefinitions;
 
+import com.booking.config.ConfigReader;
+import com.booking.constants.BookingResponseKeys;
+import com.booking.constants.ConfigKeys;
+import com.booking.constants.HttpConstants;
 import com.booking.utils.ApiUtils;
 import com.booking.context.TestContext;
 import com.booking.pojo.BookingRequest;
@@ -39,7 +43,7 @@ public class UpdateBookingSteps {
         bookingRequest.setBookingdates(new BookingRequest.BookingDates("2025-11-10", "2025-11-15"));
 
         bookingApi = new ApiUtils();
-        response = ApiUtils.putRequest("/booking/" + bookingId, bookingRequest, token);
+        response = ApiUtils.putRequest(ConfigReader.get(ConfigKeys.BOOKING_BY_ID_ENDPOINT) + bookingId, bookingRequest, token);
     }
 
     @Then("the response update booking status code should be {int}")
@@ -49,7 +53,7 @@ public class UpdateBookingSteps {
 
     @Then("response should contain updated booking details")
     public void response_should_contain_updated_booking_details() {
-        String firstName = response.jsonPath().getString("firstname");
+        String firstName = response.jsonPath().getString(BookingResponseKeys.FIRSTNAME);
         Assert.assertEquals("John", firstName);
     }
 }

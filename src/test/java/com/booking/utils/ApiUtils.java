@@ -1,6 +1,8 @@
 package com.booking.utils;
 
 import com.booking.config.ConfigReader;
+import com.booking.constants.ConfigKeys;
+import com.booking.constants.HttpConstants;
 import com.booking.pojo.BookingRequest;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -13,7 +15,7 @@ import static io.restassured.RestAssured.given;
 public class ApiUtils {
 
     private static final Logger log = LogUtils.getLogger(ApiUtils.class);
-    private static final String BASE_URL = ConfigReader.get("baseUrl");
+    private static final String BASE_URL = ConfigReader.get(ConfigKeys.BASE_URL);
     public ApiUtils() {
         RestAssured.baseURI = BASE_URL;
     }
@@ -21,7 +23,7 @@ public class ApiUtils {
     public static Response authLogin(String authEndpoint, Map<String, String> credentials) {
         return given()
                 .log().all()
-                .contentType("application/json")
+                .contentType(HttpConstants.JSON)
                 .body(credentials)
                 .post(BASE_URL + authEndpoint);
     }
@@ -29,8 +31,8 @@ public class ApiUtils {
 
     public Response postBooking(String endpoint, BookingRequest request, String token) {
         return given()
-                .header("Authorization", "Bearer " + token)
-                .header("Content-Type", "application/json")
+                .header(HttpConstants.AUTHORIZATION, "Bearer " + token)
+                .header(HttpConstants.CONTENT_TYPE, HttpConstants.JSON)
                 .body(request)
                 .log().all()
                 .when()
@@ -43,7 +45,7 @@ public class ApiUtils {
     public Response postBookingWithoutAuth(String endpoint, BookingRequest request) {
         LogUtils.logApiRequest(log, "POST", endpoint, request);
         return given()
-                .contentType("application/json")
+                .contentType(HttpConstants.JSON)
                 .body(request)
                 .log().all()
                 .when()
@@ -56,8 +58,8 @@ public class ApiUtils {
     public static Response getBooking(String endpoint, String token) {
         LogUtils.logApiRequest(log, "GET", endpoint, null);
         return  given()
-                .header("Authorization", "Bearer " + token)
-                .header("Content-Type", "application/json")
+                .header(HttpConstants.AUTHORIZATION, "Bearer " + token)
+                .header(HttpConstants.CONTENT_TYPE, HttpConstants.JSON)
                 .log().all()
                 .when()
                 .get(endpoint)
@@ -69,7 +71,7 @@ public class ApiUtils {
     public static Response getBookingWithoutAuth(String endpoint) {
         LogUtils.logApiRequest(log, "GET", endpoint, null);
         return  given()
-                .contentType("application/json")
+                .contentType(HttpConstants.JSON)
                 .log().all()
                 .when()
                 .get(endpoint)
@@ -82,8 +84,8 @@ public class ApiUtils {
         LogUtils.logApiRequest(log, "PUT", endpoint, body);
         return given()
                 .log().all()
-                .contentType("application/json")
-                .header("Authorization", "Bearer " + token)
+                .header(HttpConstants.AUTHORIZATION, "Bearer " + token)
+                .header(HttpConstants.CONTENT_TYPE, HttpConstants.JSON)
                 .body(body)
                 .when()
                 .put(endpoint)
@@ -96,8 +98,8 @@ public class ApiUtils {
     public static Response deleteRequest(String endpoint, String token) {
         LogUtils.logApiRequest(log, "DELETE", endpoint, null);
         return given()
-                .contentType("application/json")
-                .header("Authorization", "Bearer " + token)
+                .header(HttpConstants.AUTHORIZATION, "Bearer " + token)
+                .header(HttpConstants.CONTENT_TYPE, HttpConstants.JSON)
                 .delete(endpoint);
     }
 }

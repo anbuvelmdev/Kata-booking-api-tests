@@ -1,5 +1,8 @@
 package com.booking.hooks;
 
+import com.booking.config.ConfigReader;
+import com.booking.constants.AuthConstants;
+import com.booking.constants.ConfigKeys;
 import com.booking.context.TestContext;
 import com.booking.utils.ApiUtils;
 import com.booking.utils.LogUtils;
@@ -22,21 +25,26 @@ public class Hooks {
 
     @Before("@requiresAuth")
     public void setupAuth() {
-        Response res = ApiUtils.authLogin("/auth/login", Map.of("username", "admin", "password", "password"));
-        context.setAuthToken(res.jsonPath().getString("token"));
+        String endpoint = ConfigReader.get(ConfigKeys.AUTH_ENDPOINT);
+        String username = ConfigReader.get(ConfigKeys.AUTH_USERNAME);
+        String password = ConfigReader.get(ConfigKeys.AUTH_PASSWORD);
+
+        Response res = ApiUtils.authLogin(endpoint, Map.of(AuthConstants.USERNAME, username, AuthConstants.PASSWORD, password));
+        context.setAuthToken(res.jsonPath().getString(AuthConstants.TOKEN));
+        log.info("Auth token acquired successfully");
     }
 
     @Before
     public void beforeScenario(Scenario scenario) {
-        log.info("🚀 Starting Scenario: {}", scenario.getName());
+        log.info("Starting Scenario: {}", scenario.getName());
     }
 
     @After
     public void afterScenario(Scenario scenario) {
         if (scenario.isFailed()) {
-            log.error("❌ Scenario Failed: {}", scenario.getName());
+            log.error("Scenario Failed: {}", scenario.getName());
         } else {
-            log.info("✅ Scenario Passed: {}", scenario.getName());
+            log.info("Scenario Passed: {}", scenario.getName());
         }
         log.info("-------------------------------------------------------------");
     }

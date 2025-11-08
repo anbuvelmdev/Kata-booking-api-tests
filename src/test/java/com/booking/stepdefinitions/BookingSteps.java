@@ -1,18 +1,16 @@
 package com.booking.stepdefinitions;
 
-import com.booking.utils.ApiUtils;
+import com.booking.constants.CommonConstants;
+import com.booking.utils.*;
 import com.booking.context.TestContext;
 import com.booking.pojo.BookingRequest;
 import com.booking.pojo.BookingResponse;
-import com.booking.utils.LogUtils;
-import com.booking.utils.ResponseValidator;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import org.junit.Assert;
-import com.booking.utils.JsonUtils;
 import org.slf4j.Logger;
 
 import java.io.IOException;
@@ -26,14 +24,14 @@ public class BookingSteps {
     private BookingResponse bookingResponse;
     private int bookingId;
     private final TestContext context;
-    private static final Logger log = LogUtils.getLogger(UpdateBookingSteps.class);
+    private static final Logger log = LogUtils.getLogger(BookingSteps.class);
     public BookingSteps(TestContext context) {
         this.context = context;
     }
 
     @Given("user loads booking data from {string}")
     public void user_loads_booking_data_from(String dataFile){
-        bookingRequest = JsonUtils.loadBookingData("src/test/resources/testdata/" + dataFile);
+        bookingRequest = JsonUtils.loadBookingData(CommonConstants.TESTDATA_PATH + dataFile);
         bookingRequest.setRoomid(new Random().nextInt(100) + 1); // For dynamic roomID
         Assert.assertNotNull("Booking data should be loaded from JSON", bookingRequest);
         log.info("Verified booking request {}", bookingRequest);
@@ -44,7 +42,7 @@ public class BookingSteps {
 
         bookingApi = new ApiUtils();
         response = bookingApi.postBookingWithoutAuth(endpoint, bookingRequest);
-        // deserialize to POJO for your assertions
+        // deserialize to POJO for the assertions
         bookingResponse = response.as(BookingResponse.class);
         log.info("POST request sent to create booking");
     }
@@ -63,14 +61,8 @@ public class BookingSteps {
     @And("validate response based on {string}")
     public void validateResponse(String type) {
         String body = response.asString();
-        boolean isValid = switch (type.toLowerCase()) {
-            case "validbooking" -> body.contains("bookingid");
-            case "missingemailphone" -> body.contains("Failed");
-            case "missingfirstname" -> body.contains("Firstname");
-            case "invalidemail" -> body.contains("email");
-            case "invaliddates" -> body.contains("Failed");
-            default -> true; // no validation
-        };
+        String keyword = ValidationConfig.getValidationKey(type);
+        boolean isValid = body.contains(keyword);
         Assert.assertTrue("Validation failed for type: " + type, isValid);
     }
 }

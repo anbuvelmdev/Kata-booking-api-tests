@@ -8,6 +8,8 @@ import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import org.junit.Assert;
 
+import static com.booking.constants.BookingResponseKeys.*;
+
 public class GetBookingSteps {
 
     private Response response;
@@ -36,10 +38,10 @@ public class GetBookingSteps {
 
     @Then("the response should contain booking details with valid fields")
     public void the_response_should_contain_booking_details_with_valid_fields() {
-        Assert.assertNotNull(response.jsonPath().get("firstname"));
-        Assert.assertNotNull(response.jsonPath().get("lastname"));
-        Assert.assertNotNull(response.jsonPath().get("bookingdates.checkin"));
-        Assert.assertNotNull(response.jsonPath().get("bookingdates.checkout"));
+        Assert.assertNotNull(response.jsonPath().get(FIRSTNAME));
+        Assert.assertNotNull(response.jsonPath().get(LASTNAME));
+        Assert.assertNotNull(response.jsonPath().get(BOOKINGDATES_CHECKIN));
+        Assert.assertNotNull(response.jsonPath().get(BOOKINGDATES_CHECKOUT));
     }
 
     @Then("the error message should contain {string}")
