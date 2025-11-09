@@ -2,13 +2,15 @@ package com.booking.stepdefinitions;
 
 import com.booking.constants.ConfigKeys;
 import com.booking.pojo.BookingRequest;
-import com.booking.utils.*;
+import com.booking.utils.ApiUtils;
+import com.booking.utils.ConfigReader;
+import com.booking.utils.Context;
+import com.booking.utils.LogUtils;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
-import org.slf4j.Logger;
 import org.junit.Assert;
-import java.io.IOException;
+import org.slf4j.Logger;
 
 public class UpdateBookingSteps {
 
@@ -30,10 +32,11 @@ public class UpdateBookingSteps {
     public void user_sends_a_put_request_to_with_booking_details(String endpoint) {
         String token = context.getAuthToken();
         BookingRequest bookingRequest = context.getBookingRequest();
-        String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL); // ensure ConfigKeys holds BASE_URL
+        String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL);
         Assert.assertNotNull("Booking request data should be loaded before PUT", bookingRequest);
         Assert.assertNotNull("Auth token should not be null for update", token);
 
+        endpoint = endpoint + String.valueOf(context.getBookingId());
         Response response = ApiUtils.put(baseUrl, endpoint, bookingRequest, token);
         context.setResponse(response);
         log.info("PUT request sent to endpoint: {}", endpoint);

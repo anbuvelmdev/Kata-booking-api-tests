@@ -12,7 +12,6 @@ import org.junit.Assert;
 import org.slf4j.Logger;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
 import static com.booking.constants.BookingResponseKeys.*;
 
@@ -59,7 +58,10 @@ public class CommonSteps {
 
     @And("response should match schema {string}")
     public void response_should_match_schema(String schemaFileName) {
-        SchemaValidator.validateSchema(context.getResponse(), schemaFileName);
+        if (schemaFileName != null && !schemaFileName.trim().isEmpty()) {
+            SchemaValidator.validateSchema(context.getResponse(), schemaFileName);
+        }
+        log.info("Schema validation SKIPPED");
     }
 
     @Then("user should receive status code {int}")

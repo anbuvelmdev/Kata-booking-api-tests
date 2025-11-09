@@ -3,15 +3,19 @@ Feature: Update Booking API
 
   @updateBooking @positive
   Scenario Outline: Update booking with valid ID
-    Given user loads required booking data from "<testDataKey>"
-    When user sends a PUT request to "<endpoint>" with booking details
+    Given create a new booking with the following details:
+      | firstname | lastname | depositpaid | email              | phone       | checkin    | checkout   |
+      | Doll      | John     | true        | john.doll@test.com | 98765432103 | 2025-11-25 | 2025-11-27 |
+    When store the booking ID for later use
+    Then user loads required booking data from "<testDataKey>"
+    Then user sends a PUT request to "<endpoint>" with booking details
     Then user should receive status code <expectedStatus>
     And validate response based on "<validationType>"
     And response should match schema "<schemaFile>"
 
     Examples:
-      | testDataKey        | endpoint   | expectedStatus | validationType | schemaFile                           |
-      | updateValidBooking | /booking/1 | 200            | success        | success_booking_response_schema.json |
+      | testDataKey        | endpoint  | expectedStatus | validationType | schemaFile                           |
+      | updateValidBooking | /booking/ | 200            | success        | success_booking_response_schema.json |
 
   @updateBooking @Negative
   Scenario Outline: Update booking with invalid data

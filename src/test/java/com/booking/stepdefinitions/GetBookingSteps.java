@@ -6,10 +6,8 @@ import com.booking.utils.ApiUtils;
 import com.booking.utils.ConfigReader;
 import com.booking.utils.Context;
 import com.booking.utils.LogUtils;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
-import org.junit.Assert;
 import org.slf4j.Logger;
 
 public class GetBookingSteps {
@@ -27,6 +25,7 @@ public class GetBookingSteps {
     public void user_send_a_get_request_to(String endpoint) {
         String token = context.getAuthToken();
         String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL); // ensure ConfigKeys holds BASE_URL
+        endpoint = endpoint + String.valueOf(context.getBookingId());
         response = ApiUtils.get(baseUrl, endpoint, token);
         context.setResponse(response);
         log.info("GET request sent to endpoint: {}", endpoint);
