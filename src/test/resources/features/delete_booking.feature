@@ -18,7 +18,7 @@ Feature: Delete Booking API
     Given a booking ID "<id>"
     When user sends DELETE request to "<endpoint>"
     Then user should receive status code <expectedStatus>
-    And delete response should contain error "<expectedError>"
+    And validate response should contain error "<expectedError>"
     And response should match schema "<schemaFile>"
 
     Examples:
@@ -31,7 +31,7 @@ Feature: Delete Booking API
     Given a booking ID "<id>"
     When user sends DELETE request unauthorized to "<endpoint>"
     Then user should receive status code <expectedStatus>
-    And delete response should contain error "<expectedError>"
+    And validate response should contain error "<expectedError>"
     And response should match schema "<schemaFile>"
 
     Examples:
@@ -43,7 +43,7 @@ Feature: Delete Booking API
     Given a booking ID "<id>"
     When user send a DELETE request invalid token to "<endpoint>"
     Then user should receive status code <expectedStatus>
-    And delete response should contain error "<expectedError>"
+    And validate response should contain error "<expectedError>"
     And response should match schema "<schemaFile>"
 
     Examples:

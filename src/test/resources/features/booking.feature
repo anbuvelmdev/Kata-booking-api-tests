@@ -3,7 +3,7 @@ Feature: Hotel Booking API
 
   @createBooking @positive
   Scenario Outline: Create booking with valid data
-    Given user loads booking data from "<testDataKey>"
+    Given user loads required booking data from "<testDataKey>"
     When user sends a POST request to "<endpoint>" with booking details
     Then user should receive status code <expectedStatus>
     And validate response based on "<validationType>"
@@ -17,7 +17,7 @@ Feature: Hotel Booking API
 
   @createBooking @Negative
   Scenario Outline: Create booking with invalid or missing data
-    Given user loads booking data from "<testDataKey>"
+    Given user loads required booking data from "<testDataKey>"
     When user sends a POST request to "<endpoint>" with booking details
     Then user should receive status code <expectedStatus>
     And validate response should contain error "<expectedError>"
@@ -34,4 +34,4 @@ Feature: Hotel Booking API
       | phoneInvalidShort       | /booking | 400            | size must be between 11 and 21      | errors_array_schema.json  |
       | phoneInvalidLong        | /booking | 400            | size must be between 11 and 21      | errors_array_schema.json  |
       | bookingInvalidEmail     | /booking | 400            | must be a well-formed email address | errors_array_schema.json  |
-      | bookingInvalidDates     | /booking | 400            | Failed to create booking            | error_generic_schema.json |
+      | bookingInvalidDates     | /booking | 409            | Failed to create booking            | error_generic_schema.json |

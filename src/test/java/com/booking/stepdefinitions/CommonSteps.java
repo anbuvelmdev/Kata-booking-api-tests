@@ -1,12 +1,14 @@
-package com.booking.booking.stepdefinitions;
+package com.booking.stepdefinitions;
 
-import com.booking.context.TestContext;
-import com.booking.utils.ResponseValidator;
-import com.booking.utils.SchemaValidator;
+import com.booking.constants.FilePaths;
+import com.booking.pojo.BookingRequest;
+import com.booking.utils.*;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.restassured.response.Response;
 import org.junit.Assert;
+import org.slf4j.Logger;
 
 import java.time.LocalDate;
 
@@ -14,10 +16,40 @@ import static com.booking.constants.BookingResponseKeys.*;
 
 public class CommonSteps {
 
-    private final TestContext context;
+    private static final Logger log = LogUtils.getLogger(CommonSteps.class);
+    private final Context context;
+    private BookingRequest bookingRequest;
 
-    public CommonSteps(TestContext context) {
+    public CommonSteps(Context context) {
         this.context = context;
+    }
+
+    @Given("user loads required booking data from {string}")
+    public void user_loads_required_booking_data_from(String testDataKey) {
+        bookingRequest = JsonUtils.loadJson(FilePaths.TESTDATA_PATH + "booking_data.json",
+                                            testDataKey,
+                                            BookingRequest.class);
+        context.setBookingRequest(bookingRequest);
+        Assert.assertNotNull("Booking data should be loaded from JSON", bookingRequest);
+        log.info("Verified booking request {}", bookingRequest);
+    }
+
+    @And("validate response based on {string}")
+    public void validateResponse(String validationType) {
+        Response response = context.getResponse();
+        String body = response.asString();
+        log.info("Response body: {}", body);
+        boolean isValid = body.contains(validationType);
+        Assert.assertTrue("Validation failed: " + validationType, isValid);
+    }
+
+    @And("validate response should contain error {string}")
+    public void validate_response_should_contain_error(String expectedError) {
+        Response response = context.getResponse();
+        String body = response.asString();
+        log.info("Response error: {}", body);
+        boolean isValid = body.contains(expectedError);
+        Assert.assertTrue("Error validation failed: " + expectedError, isValid);
     }
 
     @And("response should match schema {string}")

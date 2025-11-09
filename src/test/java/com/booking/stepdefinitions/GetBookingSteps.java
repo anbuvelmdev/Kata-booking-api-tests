@@ -1,11 +1,11 @@
 package com.booking.stepdefinitions;
 
 import com.booking.constants.ConfigKeys;
-import com.booking.context.TestContext;
 import com.booking.pojo.BookingResponse;
 import com.booking.utils.ApiUtils;
 import com.booking.utils.ConfigReader;
 import com.booking.utils.LogUtils;
+import com.booking.utils.Context;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
@@ -15,12 +15,12 @@ import org.slf4j.Logger;
 public class GetBookingSteps {
 
     private static final Logger log = LogUtils.getLogger(GetBookingSteps.class);
-    private final TestContext context;
+    private final Context context;
     private Response response;
     private int bookingId;
     private BookingResponse bookingResponse;
 
-    public GetBookingSteps(TestContext context) {
+    public GetBookingSteps(Context context) {
         this.context = context;
     }
 
@@ -54,12 +54,5 @@ public class GetBookingSteps {
     public void the_response_should_contain_the_booking_id() {
         bookingId = bookingResponse.getBookingid();
         Assert.assertTrue("Booking ID should be greater than 0", bookingResponse.getBookingid() > 0);
-    }
-
-    @And("validate error message should contain {string}")
-    public void validate_error_message_should_contain(String expectedMessage) {
-        String body = response.getBody().asString();
-        log.info("Response after GET: {}", body);
-        Assert.assertTrue("Expected message not found", body.contains(expectedMessage));
     }
 }

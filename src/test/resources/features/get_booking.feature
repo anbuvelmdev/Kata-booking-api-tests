@@ -16,7 +16,7 @@ Feature: Get Booking API
   Scenario Outline: Get booking with invalid ID
     When user send a GET request to "<endpoint>"
     Then user should receive status code <expectedStatus>
-    And validate error message should contain "<expectedError>"
+    And validate response should contain error "<expectedError>"
     And response should match schema "<schemaFile>"
 
     Examples:
@@ -29,7 +29,7 @@ Feature: Get Booking API
   Scenario Outline: Get booking UnAuthorized
     When user send a GET request to "<endpoint>" without token
     Then user should receive status code <expectedStatus>
-    And validate error message should contain "<expectedError>"
+    And validate response should contain error "<expectedError>"
     And response should match schema "<schemaFile>"
 
     Examples:
@@ -40,7 +40,7 @@ Feature: Get Booking API
   Scenario Outline: Get booking Invalid Token
     When user send a GET request invalid token to "<endpoint>"
     Then user should receive status code <expectedStatus>
-    And validate error message should contain "<expectedError>"
+    And validate response should contain error "<expectedError>"
     And response should match schema "<schemaFile>"
 
     Examples:

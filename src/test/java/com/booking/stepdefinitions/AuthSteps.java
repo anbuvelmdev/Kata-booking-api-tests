@@ -2,24 +2,22 @@ package com.booking.stepdefinitions;
 
 import com.booking.constants.AuthConstants;
 import com.booking.constants.ConfigKeys;
-import com.booking.context.TestContext;
 import com.booking.utils.ApiUtils;
 import com.booking.utils.ConfigReader;
 import com.booking.utils.LogUtils;
-import io.cucumber.java.en.And;
+import com.booking.utils.Context;
 import io.cucumber.java.en.Given;
 import io.restassured.response.Response;
-import org.junit.Assert;
 import org.slf4j.Logger;
 
 import java.util.Map;
 
 public class AuthSteps {
     private static final Logger log = LogUtils.getLogger(AuthSteps.class);
-    private final TestContext context;
+    private final Context context;
     private Response response;
 
-    public AuthSteps(TestContext context) {
+    public AuthSteps(Context context) {
         this.context = context;
     }
 
@@ -32,20 +30,5 @@ public class AuthSteps {
                                  null);
         context.setResponse(response);
         log.info("POST auth request sent");
-    }
-
-    @And("validate auth token response based on {string}")
-    public void validate_auth_token_response_based_on(String validationType) {
-        String body = response.asString();
-        log.info(body, "auth");
-        boolean isValid = body.contains(validationType);
-        Assert.assertTrue("Validation failed: " + validationType, isValid);
-    }
-
-    @And("validate auth token response should contain error {string}")
-    public void validate_auth_token_response_should_contain_error(String expectedError) {
-        String body = response.asString();
-        boolean isValid = body.contains(expectedError);
-        Assert.assertTrue("Error validation failed: " + expectedError, isValid);
     }
 }

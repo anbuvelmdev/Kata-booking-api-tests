@@ -5,7 +5,7 @@ Feature: Authentication API
   Scenario Outline: Valid Login scenarios
     Given login using username "<username>" and password "<password>"
     Then user should receive status code <expectedStatus>
-    And validate auth token response based on "<validationType>"
+    And validate response based on "<validationType>"
     And response should match schema "<schemaFile>"
 
     Examples:
@@ -16,7 +16,7 @@ Feature: Authentication API
   Scenario Outline: Invalid Login scenarios
     Given login using username "<username>" and password "<password>"
     Then user should receive status code <expectedStatus>
-    And validate auth token response should contain error "<expectedError>"
+    And validate response should contain error "<expectedError>"
     And response should match schema "<schemaFile>"
 
     Examples:

@@ -1,26 +1,25 @@
 package com.booking.stepdefinitions;
 
 import com.booking.constants.ConfigKeys;
-import com.booking.context.TestContext;
 import com.booking.utils.ApiUtils;
 import com.booking.utils.ConfigReader;
 import com.booking.utils.LogUtils;
+import com.booking.utils.Context;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.slf4j.Logger;
 
 public class DeleteBookingSteps {
 
     private static final Logger log = LogUtils.getLogger(DeleteBookingSteps.class);
-    private final TestContext context;
+    private final Context context;
     private String bookingId;
     private Response response;
 
-    public DeleteBookingSteps(TestContext context) {
+    public DeleteBookingSteps(Context context) {
         this.context = context;
     }
 
@@ -71,13 +70,5 @@ public class DeleteBookingSteps {
         log.info("Response after DELETE: {}", body);
         Assertions.assertTrue(body.contains("Deleted") || body.isEmpty() || body.contains(validationType),
                               "Booking deletion confirmation not found in response");
-    }
-
-    @Then("delete response should contain error {string}")
-    public void delete_response_should_contain_error(String expectedError) {
-        String body = response.asString();
-        log.info("Error Response after DELETE: {}", body);
-        boolean isValid = body.contains(expectedError);
-        Assert.assertTrue("Error validation failed: " + expectedError, isValid);
     }
 }

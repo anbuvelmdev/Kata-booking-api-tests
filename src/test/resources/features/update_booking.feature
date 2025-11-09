@@ -6,7 +6,7 @@ Feature: Update Booking API
     Given user loads required booking data from "<testDataKey>"
     When user sends a PUT request to "<endpoint>" with booking details
     Then user should receive status code <expectedStatus>
-    And validate update booking response based on "<validationType>"
+    And validate response based on "<validationType>"
     And response should match schema "<schemaFile>"
 
     Examples:
@@ -18,7 +18,7 @@ Feature: Update Booking API
     Given user loads required booking data from "<testDataKey>"
     When user sends a PUT request to "<endpoint>" with booking details
     Then user should receive status code <expectedStatus>
-    And validate update booking response should contain error "<expectedError>"
+    And validate response should contain error "<expectedError>"
     And response should match schema "<schemaFile>"
 
     Examples:

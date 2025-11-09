@@ -2,7 +2,7 @@ package com.booking.hooks;
 
 import com.booking.constants.AuthConstants;
 import com.booking.constants.ConfigKeys;
-import com.booking.context.TestContext;
+import com.booking.utils.Context;
 import com.booking.utils.ApiUtils;
 import com.booking.utils.ConfigReader;
 import com.booking.utils.LogUtils;
@@ -17,9 +17,9 @@ import java.util.Map;
 public class Hooks {
 
     private static final Logger log = LogUtils.getLogger(Hooks.class);
-    private final TestContext context;
+    private final Context context;
 
-    public Hooks(TestContext context) {
+    public Hooks(Context context) {
         this.context = context;
     }
 

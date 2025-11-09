@@ -1,10 +1,12 @@
-package com.booking.context;
+package com.booking.utils;
 
+import com.booking.pojo.BookingRequest;
 import io.restassured.response.Response;
 
-public class TestContext {
+public class Context {
     private String authToken;
     private Response response;
+    private BookingRequest bookingRequest;
 
     public String getAuthToken() {
         return authToken;
@@ -20,5 +22,13 @@ public class TestContext {
 
     public void setResponse(Response response) {
         this.response = response;
+    }
+
+    public BookingRequest getBookingRequest() {
+        return bookingRequest;
+    }
+
+    public void setBookingRequest(BookingRequest bookingRequest) {
+        this.bookingRequest = bookingRequest;
     }
 }
