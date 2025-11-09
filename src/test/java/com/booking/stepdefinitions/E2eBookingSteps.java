@@ -49,8 +49,10 @@ public class E2eBookingSteps {
 
         // deserialize to POJO for the assertions
         BookingResponse bookingResponse = response.as(BookingResponse.class);
+        int bookingId = bookingResponse.getBookingid();
         log.info("Booking created successfully. Booking ID: {}",
-                 bookingResponse.getBookingid() != 0 ? bookingResponse.getBookingid() : "N/A");
+                 bookingId != 0 ? bookingId : "N/A");
+        context.setBookingId(bookingId);
     }
 
     @And("store the booking ID for later use")
@@ -102,8 +104,8 @@ public class E2eBookingSteps {
     public void deleteBooking() {
         String endpoint = "/booking/" + context.getBookingId();
         Response response = ApiUtils.delete(ConfigReader.get(ConfigKeys.BASE_URL),
-                                         endpoint,
-                                         context.getAuthToken());
+                                            endpoint,
+                                            context.getAuthToken());
         context.setResponse(response);
         log.info("DELETE request sent to endpoint: {}", endpoint);
     }
@@ -112,8 +114,8 @@ public class E2eBookingSteps {
     public void verifyBookingDeleted() {
         String endpoint = "/booking/" + context.getBookingId();
         Response getResponse = ApiUtils.get(ConfigReader.get(ConfigKeys.BASE_URL),
-                                         endpoint,
-                                         context.getAuthToken());
+                                            endpoint,
+                                            context.getAuthToken());
         log.info("GET request sent to verify booking ID deleted: {}", endpoint);
         Assert.assertEquals(404, getResponse.getStatusCode());
     }

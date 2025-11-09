@@ -4,7 +4,7 @@ Feature: End-to-End Booking API Tests
 
   @positive @create
   Scenario Outline: e2e booking successfully
-    When create a new booking with the following details:
+    Given create a new booking with the following details:
       | firstname          | lastname          | depositpaid          | email          | phone          | checkin          | checkout          |
       | <create_firstname> | <create_lastname> | <create_depositpaid> | <create_email> | <create_phone> | <create_checkin> | <create_checkout> |
     Then user should receive status code 201

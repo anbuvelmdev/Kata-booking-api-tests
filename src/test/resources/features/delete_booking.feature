@@ -3,15 +3,18 @@ Feature: Delete Booking API
 
   @deleteBooking @positive
   Scenario Outline: Delete booking by valid ID
-    Given a booking ID "<id>"
+    Given create a new booking with the following details:
+      | firstname | lastname | depositpaid | email             | phone       | checkin    | checkout   |
+      | John      | Doe      | true        | john.doe@test.com | 98765432101 | 2025-11-01 | 2025-11-05 |
+    And store the booking ID for later use
     When user sends DELETE request to "<endpoint>"
     Then user should receive status code <expectedStatus>
     And the booking should be removed successfully and contain "<validationType>"
     And response should match schema "<schemaFile>"
 
     Examples:
-      | id | endpoint  | expectedStatus | validationType | schemaFile                           |
-      | 1  | /booking/ | 200            | success        | success_booking_response_schema.json |
+      | endpoint  | expectedStatus | validationType | schemaFile                           |
+      | /booking/ | 200            | success        | success_booking_response_schema.json |
 
   @deleteBooking @Negative
   Scenario Outline: Delete booking by Invalid ID
@@ -47,5 +50,5 @@ Feature: Delete Booking API
     And response should match schema "<schemaFile>"
 
     Examples:
-      | id | endpoint  | expectedStatus | expectedError                | schemaFile |
-      | 2  | /booking/ | 403            | Failed to fetch booking: 403 |            |
+      | id | endpoint  | expectedStatus | expectedError            | schemaFile                |
+      | 2  | /booking/ | 500            | Failed to delete booking | error_generic_schema.json |

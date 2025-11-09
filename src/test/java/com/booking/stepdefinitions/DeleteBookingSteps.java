@@ -31,6 +31,7 @@ public class DeleteBookingSteps {
 
     @When("user sends DELETE request to {string}")
     public void user_sends_DELETE_request(String endpoint) {
+        this.bookingId = String.valueOf(context.getBookingId());
         sendDeleteRequest(endpoint, context.getAuthToken());
     }
 
