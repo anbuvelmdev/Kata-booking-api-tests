@@ -11,13 +11,22 @@ public final class RequestSpecFactory {
     }
 
     public static RequestSpecification create(String baseUrl, String token) {
-        RequestSpecBuilder builder = new RequestSpecBuilder()
+        RequestSpecBuilder builder = initBuilder(baseUrl);
+        addTokenHeader(builder, token);
+        return builder.build();
+    }
+
+    private static RequestSpecBuilder initBuilder(String baseUrl) {
+        return new RequestSpecBuilder()
                 .setBaseUri(baseUrl)
                 .setContentType(HttpConstants.APPLICATION_JSON)
                 .log(LogDetail.ALL);
-        if (token != null && !token.isBlank()) {
-            builder.addHeader(HttpConstants.COOKIE, HttpConstants.COOKIE_TOKEN + token);
-        }
-        return builder.build();
+    }
+
+    private static void addTokenHeader(RequestSpecBuilder builder, String token) {
+        java.util.Optional
+                .ofNullable(token)
+                .filter(t -> !t.isBlank())
+                .ifPresent(t -> builder.addHeader(HttpConstants.COOKIE, HttpConstants.COOKIE_TOKEN + t));
     }
 }

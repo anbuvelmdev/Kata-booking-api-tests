@@ -2,7 +2,7 @@
 Feature: Get Booking API
 
   @getBooking @positive
-  Scenario: Get booking details by valid ID
+  Scenario Outline: Get booking details by valid ID
     When user send a GET request to "<endpoint>"
     Then user should receive status code <expectedStatus>
     And validate response should contain booking details
@@ -10,7 +10,7 @@ Feature: Get Booking API
 
     Examples:
       | endpoint   | expectedStatus | schemaFile                       |
-      | /booking/1 | 200            | get_booking_response_schema.json |
+      | /booking/2 | 200            | get_booking_response_schema.json |
 
   @getBooking @Negative
   Scenario Outline: Get booking with invalid ID

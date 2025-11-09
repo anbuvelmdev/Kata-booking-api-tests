@@ -17,7 +17,6 @@ public class GetBookingSteps {
     private static final Logger log = LogUtils.getLogger(GetBookingSteps.class);
     private final Context context;
     private Response response;
-    private int bookingId;
     private BookingResponse bookingResponse;
 
     public GetBookingSteps(Context context) {
@@ -52,7 +51,7 @@ public class GetBookingSteps {
 
     @And("get response should contain the booking id")
     public void the_response_should_contain_the_booking_id() {
-        bookingId = bookingResponse.getBookingid();
+        int bookingId = bookingResponse.getBookingid();
         Assert.assertTrue("Booking ID should be greater than 0", bookingResponse.getBookingid() > 0);
     }
 }

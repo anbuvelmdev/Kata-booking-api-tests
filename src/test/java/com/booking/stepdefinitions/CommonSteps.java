@@ -18,7 +18,6 @@ public class CommonSteps {
 
     private static final Logger log = LogUtils.getLogger(CommonSteps.class);
     private final Context context;
-    private BookingRequest bookingRequest;
 
     public CommonSteps(Context context) {
         this.context = context;
@@ -26,7 +25,7 @@ public class CommonSteps {
 
     @Given("user loads required booking data from {string}")
     public void user_loads_required_booking_data_from(String testDataKey) {
-        bookingRequest = JsonUtils.loadJson(FilePaths.TESTDATA_PATH + "booking_data.json",
+        BookingRequest bookingRequest = JsonUtils.loadJson(FilePaths.TESTDATA_PATH + "booking_data.json",
                                             testDataKey,
                                             BookingRequest.class);
         context.setBookingRequest(bookingRequest);

@@ -1,6 +1,6 @@
 {
   "validBooking": {
-    "roomid": 1,
+    "roomid": 5,
     "firstname": "John",
     "lastname": "Doe",
     "email": "john.doe@example.com",
@@ -12,7 +12,7 @@
     }
   },
   "firstnameTooShort": {
-    "roomid": 1,
+    "roomid": 5,
     "firstname": "Jo",
     "lastname": "Doe",
     "email": "john.doe@example.com",
@@ -24,7 +24,7 @@
     }
   },
   "bookingMissingFirstname": {
-    "roomid": 1,
+    "roomid": 5,
     "lastname": "Doe",
     "email": "john.doe@example.com",
     "phone": "12345678901",
@@ -35,7 +35,7 @@
     }
   },
   "firstnameTooLong": {
-    "roomid": 1,
+    "roomid": 5,
     "firstname": "John Doe And John Dafurol",
     "lastname": "Doe",
     "email": "john.doe@example.com",
@@ -47,7 +47,7 @@
     }
   },
   "bookingWithoutEmail": {
-    "roomid": 1,
+    "roomid": 5,
     "firstname": "John",
     "lastname": "Doe",
     "email": "john.doe@example.com",
@@ -59,7 +59,7 @@
     }
   },
   "lastnameTooLong": {
-    "roomid": 1,
+    "roomid": 5,
     "firstname": "John",
     "lastname": "Doe And John Dafurol John Gofed Doe And John Dafurol John Gofed",
     "email": "john.doe@example.com",
@@ -71,7 +71,7 @@
     }
   },
   "lastnameTooShort": {
-    "roomid": 1,
+    "roomid": 5,
     "firstname": "John",
     "lastname": "Do",
     "email": "john.doe@example.com",
@@ -83,7 +83,7 @@
     }
   },
   "bookingMissingLastname": {
-    "roomid": 1,
+    "roomid": 5,
     "firstname": "John",
     "email": "john.doe@example.com",
     "phone": "12345678901",
@@ -94,7 +94,7 @@
     }
   },
   "phoneInvalidShort": {
-    "roomid": 1,
+    "roomid": 5,
     "firstname": "John",
     "lastname": "Doe",
     "email": "john.doe@example.com",
@@ -106,7 +106,7 @@
     }
   },
   "phoneInvalidLong": {
-    "roomid": 1,
+    "roomid": 5,
     "firstname": "John",
     "lastname": "Doe",
     "email": "john.doe@example.com",
@@ -118,7 +118,7 @@
     }
   },
   "bookingInvalidEmail": {
-    "roomid": 1,
+    "roomid": 5,
     "firstname": "John",
     "lastname": "Doe",
     "email": "john.doeexample.com",
@@ -130,7 +130,7 @@
     }
   },
   "bookingInvalidDates": {
-    "roomid": 1,
+    "roomid": 5,
     "firstname": "John",
     "lastname": "Doe",
     "email": "john.doe@example.com",
@@ -142,7 +142,7 @@
     }
   },
   "duplicateBooking": {
-    "roomid": 1,
+    "roomid": 5,
     "firstname": "John",
     "lastname": "Doe",
     "email": "john.doe@example.com",
@@ -190,7 +190,7 @@
     }
   },
   "updateLastnameTooLong": {
-    "roomid": 1,
+    "roomid": 5,
     "firstname": "John",
     "lastname": "Doe And John Dafurol John Gofed Doe And John Dafurol John Gofed",
     "email": "john.doe@example.com",
@@ -202,7 +202,7 @@
     }
   },
   "updateLastnameTooShort": {
-    "roomid": 1,
+    "roomid": 5,
     "firstname": "John",
     "lastname": "Do",
     "email": "john.doe@example.com",
@@ -214,7 +214,7 @@
     }
   },
   "updatePhoneInvalidShort": {
-    "roomid": 1,
+    "roomid": 5,
     "firstname": "John",
     "lastname": "Doe",
     "email": "john.doe@example.com",
@@ -226,7 +226,7 @@
     }
   },
   "updatePhoneInvalidLong": {
-    "roomid": 1,
+    "roomid": 5,
     "firstname": "John",
     "lastname": "Doe",
     "email": "john.doe@example.com",
@@ -238,7 +238,7 @@
     }
   },
   "updateBookingWithoutEmail": {
-    "roomid": 1,
+    "roomid": 5,
     "firstname": "John",
     "lastname": "Doe",
     "phone": "12345678901",
@@ -249,7 +249,7 @@
     }
   },
   "updateBookingInvalidEmail": {
-    "roomid": 1,
+    "roomid": 5,
     "firstname": "John",
     "lastname": "Doe",
     "email": "john.doeexample.com",
@@ -261,7 +261,7 @@
     }
   },
   "updateBookingInvalidDates": {
-    "roomid": 1,
+    "roomid": 5,
     "firstname": "John",
     "lastname": "Doe",
     "email": "john.doe@example.com",
@@ -273,7 +273,7 @@
     }
   },
   "updateBookingMissingFirstname": {
-    "roomid": 1,
+    "roomid": 5,
     "lastname": "Doe",
     "email": "john.doe@example.com",
     "phone": "12345678901",

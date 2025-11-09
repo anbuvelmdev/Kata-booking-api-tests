@@ -34,7 +34,7 @@ public class Hooks {
                                      ConfigReader.get(ConfigKeys.AUTH_ENDPOINT),
                                      Map.of(AuthConstants.USERNAME, username, AuthConstants.PASSWORD, password),
                                      null);
-        context.setAuthToken(res.jsonPath().getString(AuthConstants.TOKENKEY));
+        context.setAuthToken(res.jsonPath().getString(AuthConstants.TOKEN));
         log.info("Auth token acquired successfully");
     }
 

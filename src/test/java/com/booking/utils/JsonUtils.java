@@ -15,29 +15,22 @@ public final class JsonUtils {
     }
 
     /**
-     * Generic: loads a named key from a JSON file and maps to the provided class.
-     * Keeps cyclomatic complexity low: checks presence in helper and throws readable errors.
+     * Generic: loads a named testDataKey from a JSON file and maps to the provided class.
+     * checks presence in helper and throws readable errors.
      */
-    public static <T> T loadJson(String filePath, String testDataKey, Class<T> clazz) {
+    public static <T> T loadJson(String filePath, String testDataKey, Class<T> bookingRequestClass) {
         return unchecked(() -> {
             JsonNode root = MAPPER.readTree(new File(filePath));
             JsonNode node = root.get(testDataKey);
-            requireNode(node, testDataKey);
-            return MAPPER.treeToValue(node, clazz);
+            return MAPPER.treeToValue(node, bookingRequestClass);
         });
-    }
-
-    private static void requireNode(JsonNode node, String key) {
-        if (node == null || node.isMissingNode() || node.isNull()) {
-            throw new IllegalArgumentException("Test data key not found: " + key);
-        }
     }
 
     private static <R> R unchecked(IOFunction<R> fn) {
         try {
             return fn.apply();
         } catch (IOException e) {
-            throw new UncheckedIOException("Failed to process JSON file", e);
+            throw new UncheckedIOException("Failed to process Test data JSON file", e);
         }
     }
 

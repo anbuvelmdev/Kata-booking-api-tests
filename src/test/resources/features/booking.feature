@@ -1,4 +1,4 @@
-@booking @requiresAuth
+@booking
 Feature: Hotel Booking API
 
   @createBooking @positive
@@ -35,3 +35,4 @@ Feature: Hotel Booking API
       | phoneInvalidLong        | /booking | 400            | size must be between 11 and 21      | errors_array_schema.json  |
       | bookingInvalidEmail     | /booking | 400            | must be a well-formed email address | errors_array_schema.json  |
       | bookingInvalidDates     | /booking | 409            | Failed to create booking            | error_generic_schema.json |
+      | duplicateBooking        | /booking | 409            | Failed to create booking            | error_generic_schema.json |

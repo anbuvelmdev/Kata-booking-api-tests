@@ -15,7 +15,6 @@ import java.util.Map;
 public class AuthSteps {
     private static final Logger log = LogUtils.getLogger(AuthSteps.class);
     private final Context context;
-    private Response response;
 
     public AuthSteps(Context context) {
         this.context = context;
@@ -24,7 +23,7 @@ public class AuthSteps {
     @Given("login using username {string} and password {string}")
     public void login_using_username_and_password(String username, String password) {
         String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL); // ensure ConfigKeys holds BASE_URL
-        response = ApiUtils.post(baseUrl,
+        Response response = ApiUtils.post(baseUrl,
                                  ConfigReader.get(ConfigKeys.AUTH_ENDPOINT),
                                  Map.of(AuthConstants.USERNAME, username, AuthConstants.PASSWORD, password),
                                  null);

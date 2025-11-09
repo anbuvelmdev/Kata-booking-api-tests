@@ -11,7 +11,7 @@ Feature: Delete Booking API
 
     Examples:
       | id | endpoint  | expectedStatus | validationType | schemaFile                           |
-      | 2  | /booking/ | 200            | success        | success_booking_response_schema.json |
+      | 1  | /booking/ | 200            | success        | success_booking_response_schema.json |
 
   @deleteBooking @Negative
   Scenario Outline: Delete booking by Invalid ID
@@ -36,7 +36,7 @@ Feature: Delete Booking API
 
     Examples:
       | id | endpoint  | expectedStatus | expectedError           | schemaFile                |
-      | 3  | /booking/ | 401            | Authentication required | error_generic_schema.json |
+      | 2  | /booking/ | 401            | Authentication required | error_generic_schema.json |
 
   @getBooking @Negative
   Scenario Outline: Delete booking Invalid Token
@@ -48,4 +48,4 @@ Feature: Delete Booking API
 
     Examples:
       | id | endpoint  | expectedStatus | expectedError                | schemaFile |
-      | 3  | /booking/ | 403            | Failed to fetch booking: 403 |            |
+      | 2  | /booking/ | 403            | Failed to fetch booking: 403 |            |
