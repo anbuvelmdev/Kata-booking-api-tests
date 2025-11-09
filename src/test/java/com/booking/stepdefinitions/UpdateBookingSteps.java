@@ -12,6 +12,8 @@ import io.restassured.response.Response;
 import org.junit.Assert;
 import org.slf4j.Logger;
 
+import java.util.Random;
+
 public class UpdateBookingSteps {
 
     private static final Logger log = LogUtils.getLogger(UpdateBookingSteps.class);
@@ -32,6 +34,7 @@ public class UpdateBookingSteps {
     public void user_sends_a_put_request_to_with_booking_details(String endpoint) {
         String token = context.getAuthToken();
         BookingRequest bookingRequest = context.getBookingRequest();
+        bookingRequest.setRoomid(new Random().nextInt(1000) + 1);
         String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL);
         Assert.assertNotNull("Booking request data should be loaded before PUT", bookingRequest);
         Assert.assertNotNull("Auth token should not be null for update", token);

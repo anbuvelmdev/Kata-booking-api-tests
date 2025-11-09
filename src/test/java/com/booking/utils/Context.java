@@ -8,6 +8,7 @@ public class Context {
     private Response response;
     private BookingRequest bookingRequest;
     private int bookingId;
+    private String testDataKey;
 
     public String getAuthToken() {
         return authToken;
@@ -39,5 +40,13 @@ public class Context {
 
     public void setBookingId(int bookingId) {
         this.bookingId = bookingId;
+    }
+
+    public String getTestDataKey() {
+        return testDataKey;
+    }
+
+    public void setTestDataKey(String testDataKey) {
+        this.testDataKey = testDataKey;
     }
 }

@@ -29,6 +29,7 @@ public class CommonSteps {
         BookingRequest bookingRequest = JsonUtils.loadJson(FilePaths.TESTDATA_PATH + "booking_data.json",
                                                            testDataKey,
                                                            BookingRequest.class);
+        context.setTestDataKey(testDataKey);
         Assert.assertNotNull("Booking data should be loaded from JSON", bookingRequest);
         context.setBookingRequest(bookingRequest);
         log.info("Loaded booking request: {}", bookingRequest);

@@ -11,6 +11,9 @@ import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import org.slf4j.Logger;
 
+import java.util.Random;
+import java.util.Set;
+
 public class BookingSteps {
 
     private static final Logger log = LogUtils.getLogger(BookingSteps.class);
@@ -24,6 +27,11 @@ public class BookingSteps {
     public void user_sends_a_post_request_to_with_booking_details(String endpoint) {
         String token = context.getAuthToken();
         BookingRequest bookingRequest = context.getBookingRequest();
+        Set<String> excludedKeys = Set.of("invalidRoomNo", "duplicateBooking");
+        if (!excludedKeys.contains(context.getTestDataKey())) {
+            int roomId = new Random().nextInt(1000) + 1;
+            bookingRequest.setRoomid(roomId);
+        }
         String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL);
         log.info("Sending POST request to create booking at endpoint: {}", endpoint);
 
