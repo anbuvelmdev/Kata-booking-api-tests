@@ -48,17 +48,4 @@ public class GetBookingSteps {
         context.setResponse(response);
         log.info("GET request sent without token to endpoint: {}", endpoint);
     }
-
-    @And("get response should contain the booking id")
-    public void the_response_should_contain_the_booking_id() {
-        response = context.getResponse();
-
-        // Deserialize response to POJO
-        bookingResponse = response.as(BookingResponse.class);
-        Assert.assertNotNull("Booking response should not be null", bookingResponse);
-
-        int bookingId = bookingResponse.getBookingid();
-        log.info("Validated booking ID in response: {}", bookingId);
-        Assert.assertTrue("Booking ID should be greater than 0", bookingId > 0);
-    }
 }

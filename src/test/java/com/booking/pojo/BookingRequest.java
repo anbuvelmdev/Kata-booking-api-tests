@@ -13,6 +13,19 @@ public class BookingRequest {
     private boolean depositpaid;
     private BookingDates bookingdates;
 
+    public BookingRequest() {
+    }
+
+    public BookingRequest(int roomId, String firstname, String lastname, String email, String phone, boolean depositpaid, BookingDates bookingdates) {
+        this.roomid = roomId;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.phone = phone;
+        this.depositpaid = depositpaid;
+        this.bookingdates = bookingdates;
+    }
+
     // Getters and Setters
     public int getRoomid() {
         return roomid;
