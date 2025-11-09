@@ -6,13 +6,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import java.util.Objects;
 
 public final class JsonUtils {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    private JsonUtils() {}
+    private JsonUtils() {
+    }
 
     /**
      * Generic: loads a named key from a JSON file and maps to the provided class.

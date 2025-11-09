@@ -79,7 +79,8 @@ public class BookingRequest {
         private String checkin;
         private String checkout;
 
-        public BookingDates() {}
+        public BookingDates() {
+        }
 
         public BookingDates(String checkin, String checkout) {
             this.checkin = checkin;

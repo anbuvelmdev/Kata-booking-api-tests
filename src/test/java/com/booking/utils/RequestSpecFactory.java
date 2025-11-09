@@ -1,15 +1,14 @@
 package com.booking.utils;
 
-import com.booking.constants.AuthConstants;
 import com.booking.constants.HttpConstants;
-import io.restassured.filter.log.LogDetail;
-import org.apache.http.client.config.RequestConfig;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.filter.log.LogDetail;
 import io.restassured.specification.RequestSpecification;
 
 public final class RequestSpecFactory {
 
-    private RequestSpecFactory(){}
+    private RequestSpecFactory() {
+    }
 
     public static RequestSpecification create(String baseUrl, String token) {
         RequestSpecBuilder builder = new RequestSpecBuilder()
@@ -17,7 +16,7 @@ public final class RequestSpecFactory {
                 .setContentType(HttpConstants.APPLICATION_JSON)
                 .log(LogDetail.ALL);
         if (token != null && !token.isBlank()) {
-            builder.addHeader(HttpConstants.COOKIE,  HttpConstants.COOKIE_TOKEN + token);
+            builder.addHeader(HttpConstants.COOKIE, HttpConstants.COOKIE_TOKEN + token);
         }
         return builder.build();
     }

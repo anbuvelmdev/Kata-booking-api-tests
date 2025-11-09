@@ -1,10 +1,10 @@
 package com.booking.hooks;
 
-import com.booking.config.ConfigReader;
 import com.booking.constants.AuthConstants;
 import com.booking.constants.ConfigKeys;
 import com.booking.context.TestContext;
 import com.booking.utils.ApiUtils;
+import com.booking.utils.ConfigReader;
 import com.booking.utils.LogUtils;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -30,10 +30,11 @@ public class Hooks {
         String password = ConfigReader.get(ConfigKeys.AUTH_PASSWORD);
 
         String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL); // ensure ConfigKeys holds BASE_URL
-        Response res = ApiUtils.post(baseUrl, ConfigReader.get(ConfigKeys.AUTH_ENDPOINT),
-                Map.of(AuthConstants.USERNAME, username, AuthConstants.PASSWORD, password),
-                null);
-        context.setAuthToken(res.jsonPath().getString(AuthConstants.TOKEN));
+        Response res = ApiUtils.post(baseUrl,
+                                     ConfigReader.get(ConfigKeys.AUTH_ENDPOINT),
+                                     Map.of(AuthConstants.USERNAME, username, AuthConstants.PASSWORD, password),
+                                     null);
+        context.setAuthToken(res.jsonPath().getString(AuthConstants.TOKENKEY));
         log.info("Auth token acquired successfully");
     }
 

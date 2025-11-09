@@ -1,20 +1,16 @@
 package com.booking.booking.stepdefinitions;
 
+import com.booking.context.TestContext;
 import com.booking.utils.ResponseValidator;
+import com.booking.utils.SchemaValidator;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.restassured.response.Response;
-import com.booking.utils.SchemaValidator;
-import com.booking.context.TestContext;
 import org.junit.Assert;
 
 import java.time.LocalDate;
 
 import static com.booking.constants.BookingResponseKeys.*;
-import static com.booking.constants.BookingResponseKeys.BOOKINGDATES_CHECKIN;
-import static com.booking.constants.BookingResponseKeys.BOOKINGDATES_CHECKOUT;
-import static com.booking.constants.BookingResponseKeys.DEPOSITPAID;
-import static com.booking.constants.BookingResponseKeys.LASTNAME;
 
 public class CommonSteps {
 
@@ -61,7 +57,6 @@ public class CommonSteps {
         LocalDate checkoutDate = LocalDate.parse(response.jsonPath().get(BOOKINGDATES_CHECKOUT));
         Assert.assertNotNull(checkinDate);
         Assert.assertNotNull(checkoutDate);
-        Assert.assertTrue("Checkout date should be after check-in date",
-                checkoutDate.isAfter(checkinDate));
+        Assert.assertTrue("Checkout date should be after check-in date", checkoutDate.isAfter(checkinDate));
     }
 }
