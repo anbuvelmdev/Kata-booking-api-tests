@@ -22,12 +22,13 @@ public class AuthSteps {
 
     @Given("login using username {string} and password {string}")
     public void login_using_username_and_password(String username, String password) {
-        String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL); // ensure ConfigKeys holds BASE_URL
+        String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL);
+        log.info("Initiating login for user: {}", username);
         Response response = ApiUtils.post(baseUrl,
                                  ConfigReader.get(ConfigKeys.AUTH_ENDPOINT),
                                  Map.of(AuthConstants.USERNAME, username, AuthConstants.PASSWORD, password),
                                  null);
         context.setResponse(response);
-        log.info("POST auth request sent");
+        log.info("Authentication request sent successfully for user: {}", username);
     }
 }

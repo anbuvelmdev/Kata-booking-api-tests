@@ -3,8 +3,8 @@ package com.booking.stepdefinitions;
 import com.booking.constants.ConfigKeys;
 import com.booking.utils.ApiUtils;
 import com.booking.utils.ConfigReader;
-import com.booking.utils.LogUtils;
 import com.booking.utils.Context;
+import com.booking.utils.LogUtils;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -31,44 +31,40 @@ public class DeleteBookingSteps {
 
     @When("user sends DELETE request to {string}")
     public void user_sends_DELETE_request(String endpoint) {
-        String resolvedEndpoint = endpoint + bookingId;
-        log.info("Sending DELETE valid request to endpoint: {}", resolvedEndpoint);
-
-        String token = context.getAuthToken();
-        String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL); // ensure ConfigKeys holds BASE_URL
-        response = ApiUtils.delete(baseUrl, resolvedEndpoint, token);
-        context.setResponse(response);
-        log.info("DELETE request sent: {}", bookingId);
+        sendDeleteRequest(endpoint, context.getAuthToken());
     }
 
     @When("user sends DELETE request unauthorized to {string}")
     public void user_sends_DELETE_request_unauthorized_to(String endpoint) {
-        String resolvedEndpoint = endpoint + bookingId;
-        log.info("Sending DELETE unauthorized request to endpoint: {}", resolvedEndpoint);
-
-        String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL); // ensure ConfigKeys holds BASE_URL
-        response = ApiUtils.delete(baseUrl, resolvedEndpoint, "");
-        context.setResponse(response);
-        log.info("DELETE request sent without token: {}", bookingId);
+        sendDeleteRequest(endpoint, "");
     }
 
     @When("user send a DELETE request invalid token to {string}")
     public void user_send_a_DELETE_request_invalid_token_to(String endpoint) {
-        String resolvedEndpoint = endpoint + bookingId;
-        log.info("Sending DELETE invalid request to endpoint: {}", resolvedEndpoint);
+        sendDeleteRequest(endpoint, ConfigReader.get(ConfigKeys.DUMMY_TOKEN));
+    }
 
-        String token = ConfigReader.get(ConfigKeys.DUMMY_TOKEN);
-        String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL); // ensure ConfigKeys holds BASE_URL
+    private void sendDeleteRequest(String endpoint, String token) {
+        String resolvedEndpoint = endpoint + bookingId;
+        log.info("Sending DELETE request to endpoint: {}", resolvedEndpoint);
+
+        String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL);
         response = ApiUtils.delete(baseUrl, resolvedEndpoint, token);
         context.setResponse(response);
-        log.info("DELETE request sent invalid token: {}", bookingId);
     }
 
     @Then("the booking should be removed successfully and contain {string}")
     public void the_booking_should_be_removed_successfully_and_contain(String validationType) {
         String body = context.getResponse().asString();
         log.info("Response after DELETE: {}", body);
-        Assertions.assertTrue(body.contains("Deleted") || body.isEmpty() || body.contains(validationType),
-                              "Booking deletion confirmation not found in response");
+
+        boolean isDeleted = body.contains("Deleted");
+        boolean isEmpty = body.isEmpty();
+        boolean matchesExpected = body.contains(validationType);
+
+        Assertions.assertTrue(
+                isDeleted || isEmpty || matchesExpected,
+                String.format("Unexpected delete response: '%s'", body)
+        );
     }
 }

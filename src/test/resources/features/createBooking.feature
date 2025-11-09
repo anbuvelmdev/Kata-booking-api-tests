@@ -25,6 +25,7 @@ Feature: Hotel Booking API
 
     Examples:
       | testDataKey             | endpoint | expectedStatus | expectedError                       | schemaFile                |
+      | invalidRoomNo           | /booking | 400            | must be greater than or equal to 1  | errors_array_schema.json  |
       | firstnameTooShort       | /booking | 400            | size must be between 3 and 18       | errors_array_schema.json  |
       | firstnameTooLong        | /booking | 400            | size must be between 3 and 18       | errors_array_schema.json  |
       | bookingMissingFirstname | /booking | 400            | Firstname should not be blank       | errors_array_schema.json  |

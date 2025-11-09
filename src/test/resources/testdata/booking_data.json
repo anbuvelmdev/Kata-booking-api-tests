@@ -1,6 +1,18 @@
 {
   "validBooking": {
-    "roomid": 5,
+    "roomid": 1,
+    "firstname": "John",
+    "lastname": "Doe",
+    "email": "john.doe@example.com",
+    "phone": "12345678901",
+    "depositpaid": true,
+    "bookingdates": {
+      "checkin": "2025-11-10",
+      "checkout": "2025-11-15"
+    }
+  },
+  "invalidRoomNo": {
+    "roomid": 0,
     "firstname": "John",
     "lastname": "Doe",
     "email": "john.doe@example.com",
@@ -142,7 +154,7 @@
     }
   },
   "duplicateBooking": {
-    "roomid": 5,
+    "roomid": 1,
     "firstname": "John",
     "lastname": "Doe",
     "email": "john.doe@example.com",
@@ -154,7 +166,7 @@
     }
   },
   "updateValidBooking": {
-    "roomid": 5,
+    "roomid": 1,
     "firstname": "John",
     "lastname": "Doe",
     "email": "john.doe@example.com",

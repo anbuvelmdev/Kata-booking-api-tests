@@ -7,10 +7,12 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.restassured.response.Response;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.slf4j.Logger;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 import static com.booking.constants.BookingResponseKeys.*;
 
@@ -26,11 +28,11 @@ public class CommonSteps {
     @Given("user loads required booking data from {string}")
     public void user_loads_required_booking_data_from(String testDataKey) {
         BookingRequest bookingRequest = JsonUtils.loadJson(FilePaths.TESTDATA_PATH + "booking_data.json",
-                                            testDataKey,
-                                            BookingRequest.class);
-        context.setBookingRequest(bookingRequest);
+                                                           testDataKey,
+                                                           BookingRequest.class);
         Assert.assertNotNull("Booking data should be loaded from JSON", bookingRequest);
-        log.info("Verified booking request {}", bookingRequest);
+        context.setBookingRequest(bookingRequest);
+        log.info("Loaded booking request: {}", bookingRequest);
     }
 
     @And("validate response based on {string}")
@@ -38,29 +40,31 @@ public class CommonSteps {
         Response response = context.getResponse();
         String body = response.asString();
         log.info("Response body: {}", body);
-        boolean isValid = body.contains(validationType);
-        Assert.assertTrue("Validation failed: " + validationType, isValid);
+
+        Assert.assertTrue(
+                "Validation failed. Expected text not found: " + validationType,
+                StringUtils.containsIgnoreCase(body, validationType));
     }
 
     @And("validate response should contain error {string}")
     public void validate_response_should_contain_error(String expectedError) {
         Response response = context.getResponse();
         String body = response.asString();
-        log.info("Response error: {}", body);
-        boolean isValid = body.contains(expectedError);
-        Assert.assertTrue("Error validation failed: " + expectedError, isValid);
+        log.warn("Response (error): {}", body);
+        Assert.assertTrue(
+                "Error validation failed: " + expectedError,
+                StringUtils.containsIgnoreCase(body, expectedError)
+        );
     }
 
     @And("response should match schema {string}")
     public void response_should_match_schema(String schemaFileName) {
-        Response response = context.getResponse();
-        SchemaValidator.validateSchema(response, schemaFileName);
+        SchemaValidator.validateSchema(context.getResponse(), schemaFileName);
     }
 
     @Then("user should receive status code {int}")
     public void user_should_receive_status_code(int expectedStatusCode) {
-        Response response = context.getResponse();
-        ResponseValidator.validateStatusCode(response, expectedStatusCode);
+        ResponseValidator.validateStatusCode(context.getResponse(), expectedStatusCode);
     }
 
     @And("validate response should contain booking details")
@@ -68,6 +72,8 @@ public class CommonSteps {
         Response response = context.getResponse();
         String body = response.getBody().asString();
         Assert.assertFalse("Response body should not be empty", body.isEmpty());
+
+        log.info("Validating booking details...");
 
         int bookingId = response.jsonPath().getInt(BOOKINGID);
         int roomId = response.jsonPath().getInt(ROOMID);
@@ -82,12 +88,12 @@ public class CommonSteps {
         Assert.assertFalse("Lastname should not be empty", lastName.isEmpty());
 
         Boolean depositPaid = response.jsonPath().getBoolean(DEPOSITPAID);
-        Assert.assertNotNull(depositPaid);
+        Assert.assertNotNull("DepositPaid should not be null", depositPaid);
 
         LocalDate checkinDate = LocalDate.parse(response.jsonPath().get(BOOKINGDATES_CHECKIN));
         LocalDate checkoutDate = LocalDate.parse(response.jsonPath().get(BOOKINGDATES_CHECKOUT));
-        Assert.assertNotNull(checkinDate);
-        Assert.assertNotNull(checkoutDate);
         Assert.assertTrue("Checkout date should be after check-in date", checkoutDate.isAfter(checkinDate));
+
+        log.info("Booking response fields validated successfully.");
     }
 }

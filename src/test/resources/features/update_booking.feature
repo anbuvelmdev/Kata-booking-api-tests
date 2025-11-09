@@ -11,7 +11,7 @@ Feature: Update Booking API
 
     Examples:
       | testDataKey        | endpoint   | expectedStatus | validationType | schemaFile                           |
-      | updateValidBooking | /booking/2 | 200            | success        | success_booking_response_schema.json |
+      | updateValidBooking | /booking/1 | 200            | success        | success_booking_response_schema.json |
 
   @updateBooking @Negative
   Scenario Outline: Update booking with invalid data

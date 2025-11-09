@@ -10,7 +10,7 @@ Feature: Get Booking API
 
     Examples:
       | endpoint   | expectedStatus | schemaFile                       |
-      | /booking/2 | 200            | get_booking_response_schema.json |
+      | /booking/1 | 200            | get_booking_response_schema.json |
 
   @getBooking @Negative
   Scenario Outline: Get booking with invalid ID

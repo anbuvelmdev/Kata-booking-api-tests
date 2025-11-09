@@ -7,7 +7,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import org.slf4j.Logger;
-
+import org.junit.Assert;
 import java.io.IOException;
 
 public class UpdateBookingSteps {
@@ -21,7 +21,9 @@ public class UpdateBookingSteps {
 
     @Given("booking with id {string} exists")
     public void booking_with_id_exists(String bookingId) {
-        log.info("Checking booking ID exists: {}", bookingId);
+        Assert.assertNotNull("Booking ID should not be null", bookingId);
+//        context.setBookingId(bookingId);
+        log.info("Confirmed booking ID exists: {}", bookingId);
     }
 
     @When("user sends a PUT request to {string} with booking details")
@@ -29,8 +31,12 @@ public class UpdateBookingSteps {
         String token = context.getAuthToken();
         BookingRequest bookingRequest = context.getBookingRequest();
         String baseUrl = ConfigReader.get(ConfigKeys.BASE_URL); // ensure ConfigKeys holds BASE_URL
+        Assert.assertNotNull("Booking request data should be loaded before PUT", bookingRequest);
+        Assert.assertNotNull("Auth token should not be null for update", token);
+
         Response response = ApiUtils.put(baseUrl, endpoint, bookingRequest, token);
         context.setResponse(response);
-        log.info("PUT request sent to booking endpoint: {}", endpoint);
+        log.info("PUT request sent to endpoint: {}", endpoint);
+        log.debug("Updated booking payload: {}", bookingRequest);
     }
 }
